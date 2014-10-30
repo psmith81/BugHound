@@ -1,0 +1,106 @@
+﻿@model PagedList.PagedList<BugHound.Models.User>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@*
+    @model IEnumerable<BugHound.Models.User>
+*@
+
+@{
+    ViewBag.Title = "Users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink("Register New User", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+</p>
+
+<table class="table table-striped">
+    <tr class="info">
+        <th>
+            Name
+        </th>
+        <th>
+            UserName
+        </th>
+        <th>
+            EMail
+        </th>
+        <th>
+            Phone
+        </th>
+        <th>
+            Supervisor
+        </th>
+        <th>
+            Active
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    if (item.Active)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User1.Name)
+            </td>
+            <td>
+                <div class="checkbox-inline disabled">
+                    @Html.DisplayFor(modelItem => item.Active) Active
+                </div>
+            </td>
+            <td>
+                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn  btn-primary btn-sm" }) |
+                 @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn  btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+    else
+    {
+        <tr class="danger">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EMail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User1.Name)
+            </td>
+            <td>
+                <div class="checkbox-inline disabled">
+                    @Html.DisplayFor(modelItem => item.Active) Inactive
+                </div>
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn  btn-primary btn-sm" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn  btn-primary btn-sm" })
+            </td>
+        </tr>
+    }
+}
+
+</table>
+<br />
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

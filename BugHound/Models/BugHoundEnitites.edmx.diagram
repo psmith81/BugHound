@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c0bdce9536b1469d9ddb96ddff4df15d" Name="Diagram1">
+        <EntityTypeShape EntityType="BugHoundModel.Attachement" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Comment" Width="1.5" PointX="6" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.History" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Notification" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Priority" Width="1.5" PointX="6" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Project" Width="1.5" PointX="3" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.ProjectUser" Width="1.5" PointX="5.25" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Status" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Ticket" Width="1.5" PointX="8.25" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Type" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.User" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
+        <AssociationConnector Association="BugHoundModel.FK_Attachements_Tickets" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Attachements_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_TicketComments_Tickets" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_TicketComments_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_History_Tickets" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_History_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Notifications_Tickets" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Notifications_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_Priorities" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Projects_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_ProjectUsers_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_Projects" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_ProjectUsers_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_TicketStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_BugType" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_Users_Assigned" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_Users_EnteredBy" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Tickets_Users_Owner" ManuallyRouted="false" />
+        <AssociationConnector Association="BugHoundModel.FK_Users_Users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

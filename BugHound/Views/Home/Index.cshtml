@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    ViewBag.Title = "Home Page";
+}
+@*
+    <div class="jumbotron">
+        <h1>BugHound</h1>
+
+        <img src="~/img/theBugHound.jpg" width="30%" />
+    </div>
+*@
+<h1>BugHound</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            
+            <img src="~/img/theBugHound.jpg" width="80%" />
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                @if (User.IsInRole("Administrator"))
+                {
+                    <div class="col-md-11">
+                        @Html.Partial("AdminPartial")
+                    </div>
+                    <div class="col-md-1">
+
+                    </div>
+                }
+                @if (User.IsInRole("Support"))
+                {
+                    <div class="col-md-6">
+                        <p>You have the Support role.</p>
+                    </div>
+                    
+                }
+            </div>
+        </div>
+    </div>
+</div>
