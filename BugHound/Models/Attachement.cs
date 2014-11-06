@@ -18,10 +18,10 @@ namespace BugHound.Models
         public int UserId { get; set; }
         public int TicketId { get; set; }
         public string FileName { get; set; }
-        public System.Guid FileGUID { get; set; }
         public bool UpLoaded { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTimeOffset> DateAttached { get; set; }
+        public string FileUNQName { get; set; }
     
         public virtual Ticket Ticket { get; set; }
         public virtual User User { get; set; }

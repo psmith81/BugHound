@@ -4,11 +4,10 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="TicketId" Type="int" Nullable="false" />
     <Property Name="FileName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="FileGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UpLoaded" Type="bit" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="DateAttached" Type="datetimeoffset" Precision="2" />

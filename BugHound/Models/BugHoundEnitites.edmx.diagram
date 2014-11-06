@@ -5,7 +5,7 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="c0bdce9536b1469d9ddb96ddff4df15d" Name="Diagram1">
-        <EntityTypeShape EntityType="BugHoundModel.Attachement" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BugHoundModel.Attachement" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
         <EntityTypeShape EntityType="BugHoundModel.Comment" Width="1.5" PointX="6" PointY="11.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BugHoundModel.History" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
         <EntityTypeShape EntityType="BugHoundModel.Notification" Width="1.5" PointX="3" PointY="7.25" IsExpanded="true" />

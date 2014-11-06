@@ -9,7 +9,6 @@
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="FileGUID" ColumnName="FileGUID" />
           <ScalarProperty Name="UpLoaded" ColumnName="UpLoaded" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>

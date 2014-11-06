@@ -8,7 +8,6 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="TicketId" Type="Int32" Nullable="false" />
     <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="FileGUID" Type="Guid" Nullable="false" />
     <Property Name="UpLoaded" Type="Boolean" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Ticket" Relationship="Self.FK_Attachements_Tickets" FromRole="Attachements" ToRole="Tickets" />
