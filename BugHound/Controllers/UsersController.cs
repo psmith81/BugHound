@@ -11,6 +11,7 @@ using PagedList.Mvc;
 
 namespace BugHound.Models
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private BugHoundSQLEntities db = new BugHoundSQLEntities();
@@ -45,7 +46,7 @@ namespace BugHound.Models
         // GET: Users/Create
         public ActionResult Create()
         {
-            ViewBag.SupervisorId = new SelectList(db.Users, "Id", "Name");
+            ViewBag.SupervisorId = new SelectList(db.Users.Where(u => u.Active), "Id", "Name");
             return View();
         }
 
@@ -63,7 +64,7 @@ namespace BugHound.Models
                 return RedirectToAction("Index");
             }
 
-            ViewBag.SupervisorId = new SelectList(db.Users, "Id", "Name", user.SupervisorId);
+            ViewBag.SupervisorId = new SelectList(db.Users.Where(u => u.Active), "Id", "Name", user.SupervisorId);
             return View(user);
         }
 

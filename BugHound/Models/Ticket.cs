@@ -27,7 +27,6 @@ namespace BugHound.Models
         public System.DateTimeOffset CreatedOn { get; set; }
         public int PriorityId { get; set; }
         public string Title { get; set; }
-        public int OwnerId { get; set; }
         public int TypeId { get; set; }
         public int StatusId { get; set; }
         public int ProjectId { get; set; }
@@ -46,6 +45,5 @@ namespace BugHound.Models
         public virtual Type Type { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Ticket" Relationship="Self.FK_Attachements_Tickets" FromRole="Attachements" ToRole="Tickets" />
     <NavigationProperty Name="User" Relationship="Self.FK_Attachements_Users" FromRole="Attachements" ToRole="Users" />
+    <Property Name="DateAttached" Type="DateTimeOffset" Precision="2" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>
@@ -46,9 +47,9 @@
     <Property Name="TicketId" Type="Int32" Nullable="false" />
     <Property Name="SentAt" Type="DateTimeOffset" Nullable="false" Precision="2" />
     <Property Name="Notification1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="RecievedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Ticket" Relationship="Self.FK_Notifications_Tickets" FromRole="Notifications" ToRole="Tickets" />
     <NavigationProperty Name="User" Relationship="Self.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
+    <Property Name="Recieved" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Priority">
     <Key>
@@ -57,6 +58,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Priorities" FromRole="Priorities" ToRole="Tickets" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Project">
     <Key>
@@ -86,6 +88,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_TicketStatus" FromRole="Status" ToRole="Tickets" />
+    <Property Name="SortOrder" Type="Int32" />
   </EntityType>
   <EntityType Name="Ticket">
     <Key>
@@ -96,7 +99,6 @@
     <Property Name="CreatedOn" Type="DateTimeOffset" Nullable="false" Precision="2" />
     <Property Name="PriorityId" Type="Int32" Nullable="false" />
     <Property Name="Title" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="OwnerId" Type="Int32" Nullable="false" />
     <Property Name="TypeId" Type="Int32" Nullable="false" />
     <Property Name="StatusId" Type="Int32" Nullable="false" />
     <Property Name="ProjectId" Type="Int32" Nullable="false" />
@@ -114,7 +116,6 @@
     <NavigationProperty Name="Type" Relationship="Self.FK_Tickets_BugType" FromRole="Tickets" ToRole="Type" />
     <NavigationProperty Name="User" Relationship="Self.FK_Tickets_Users_Assigned" FromRole="Tickets" ToRole="Users" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Tickets_Users_EnteredBy" FromRole="Tickets" ToRole="Users" />
-    <NavigationProperty Name="User2" Relationship="Self.FK_Tickets_Users_Owner" FromRole="Tickets" ToRole="Users" />
   </EntityType>
   <EntityType Name="Type">
     <Key>
@@ -123,6 +124,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_BugType" FromRole="Type" ToRole="Tickets" />
+    <Property Name="SortOrder" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="User">
     <Key>
@@ -142,7 +144,6 @@
     <NavigationProperty Name="ProjectUsers" Relationship="Self.FK_ProjectUsers_Users" FromRole="Users" ToRole="ProjectUsers" />
     <NavigationProperty Name="Tickets" Relationship="Self.FK_Tickets_Users_Assigned" FromRole="Users" ToRole="Tickets" />
     <NavigationProperty Name="Tickets1" Relationship="Self.FK_Tickets_Users_EnteredBy" FromRole="Users" ToRole="Tickets" />
-    <NavigationProperty Name="Tickets2" Relationship="Self.FK_Tickets_Users_Owner" FromRole="Users" ToRole="Tickets" />
     <NavigationProperty Name="Users1" Relationship="Self.FK_Users_Users" FromRole="Users" ToRole="Users1" />
     <NavigationProperty Name="User1" Relationship="Self.FK_Users_Users" FromRole="Users1" ToRole="Users" />
     <Property Name="Active" Type="Boolean" Nullable="false" />
@@ -351,18 +352,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tickets_Users_Owner">
-    <End Role="Users" Type="Self.User" Multiplicity="1" />
-    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Tickets">
-        <PropertyRef Name="OwnerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Users_Users">
     <End Role="Users" Type="Self.User" Multiplicity="0..1" />
     <End Role="Users1" Type="Self.User" Multiplicity="*" />
@@ -452,10 +441,6 @@
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>
     <AssociationSet Name="FK_Tickets_Users_EnteredBy" Association="Self.FK_Tickets_Users_EnteredBy">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Tickets" EntitySet="Tickets" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tickets_Users_Owner" Association="Self.FK_Tickets_Users_Owner">
       <End Role="Users" EntitySet="Users" />
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>

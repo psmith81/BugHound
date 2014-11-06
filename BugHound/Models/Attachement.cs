@@ -21,6 +21,7 @@ namespace BugHound.Models
         public System.Guid FileGUID { get; set; }
         public bool UpLoaded { get; set; }
         public string Description { get; set; }
+        public Nullable<System.DateTimeOffset> DateAttached { get; set; }
     
         public virtual Ticket Ticket { get; set; }
         public virtual User User { get; set; }

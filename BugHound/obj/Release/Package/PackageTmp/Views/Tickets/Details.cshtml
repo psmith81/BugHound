@@ -1,0 +1,206 @@
+﻿@model BugHound.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-5">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedOn)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastedUpdated)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastedUpdated)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Narration)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Narration)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Attachments)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Attachments)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.Priority.Name)*@
+                    Priority
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Priority.Name)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.Project.Name)*@
+                    Project
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Project.Name)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.Status.Name)*@
+                    Status
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Status.Name)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.Type.Name)*@
+                    Type
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Type.Name)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.User.Name)*@
+                    Assigned To
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.User.Name)
+                </dd>
+
+                <dt>
+                    @*@Html.DisplayNameFor(model => model.User1.Name)*@
+                    Entered By
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.User1.Name)
+                </dd>
+
+            </dl>
+        </div>
+        <div class="col-md-7">
+            <div class="tabbable">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#pane1" data-toggle="tab">Comments</a></li>
+                    <li><a href="#pane2" data-toggle="tab">Attachments</a></li>
+                    <li><a href="#pane3" data-toggle="tab">Histories</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="pane1" class="tab-pane active">
+                        <div class="row">
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="span3">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <tr>
+                                                <th>
+                                                    Made By
+                                                </th>
+                                                <th>
+                                                    Comment
+                                                </th>
+                                            </tr>
+                                            @foreach (var item in Model.Comments)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.User.Name)
+                                                    </td>
+                                                    <td>
+                                                        <a id="popover-@item.Id" class="btn" href="" data-content="@item.Comment1" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
+
+                                                            @if (!string.IsNullOrEmpty(item.Comment1))
+                                                            {
+                                                                @item.Comment1.Substring(0, Math.Min(item.Comment1.Length, 70))
+                                                            }
+                                                        </a>
+                                                        @*@Html.DisplayFor(modelItem => item.Comment1)*@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><br /></div>
+                           <div class="row">
+                                <div class="col-md-2 col-md-offset-1">
+                                    @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-md" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pane2" class="tab-pane">
+                        <h4>Pane 2 Content</h4>
+                        <pre>Code stuff...</pre>
+                        <p> and so on ...</p>
+                    </div>
+                    <div id="pane3" class="tab-pane">
+                        <h4>Pane 3 Content</h4>
+                    </div>
+                </div><!-- /.tab-content -->
+            </div><!-- /.tabbable -->
+        </div>
+    </div>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    <nav>
+        <ul class="pager">
+            <li class="previous"><a href="@ViewBag.PreviousPage" class="previous">&larr; Return</a></li>
+        </ul>
+    </nav>
+
+
+
+</p>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(function () {
+            $("[rel='popover']").popover({
+                trigger: 'hover',
+                template: '<div class="popover wide">' +
+                              '<div class="arrow"></div>' +
+                              '<div class="popover-inner">' +
+                                  '<h3 class="popover-title"></h3>' +
+                                  '<div class="popover-content"><p></p></div>' +
+                              '</div>' +
+                          '</div>'
+            });
+        });
+</script>
+}

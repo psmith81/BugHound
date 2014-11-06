@@ -24,7 +24,6 @@ namespace BugHound.Models
             this.ProjectUsers = new HashSet<ProjectUser>();
             this.Tickets = new HashSet<Ticket>();
             this.Tickets1 = new HashSet<Ticket>();
-            this.Tickets2 = new HashSet<Ticket>();
             this.Users1 = new HashSet<User>();
         }
     
@@ -44,7 +43,6 @@ namespace BugHound.Models
         public virtual ICollection<ProjectUser> ProjectUsers { get; set; }
         public virtual ICollection<Ticket> Tickets { get; set; }
         public virtual ICollection<Ticket> Tickets1 { get; set; }
-        public virtual ICollection<Ticket> Tickets2 { get; set; }
         public virtual ICollection<User> Users1 { get; set; }
         public virtual User User1 { get; set; }
     }

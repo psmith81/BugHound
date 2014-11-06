@@ -21,6 +21,7 @@ namespace BugHound.Models
     
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> SortOrder { get; set; }
     
         public virtual ICollection<Ticket> Tickets { get; set; }
     }

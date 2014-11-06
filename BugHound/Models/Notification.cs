@@ -19,7 +19,7 @@ namespace BugHound.Models
         public int TicketId { get; set; }
         public System.DateTimeOffset SentAt { get; set; }
         public string Notification1 { get; set; }
-        public string RecievedBy { get; set; }
+        public bool Recieved { get; set; }
     
         public virtual Ticket Ticket { get; set; }
         public virtual User User { get; set; }

@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Attachements">
       <EntityTypeMapping TypeName="BugHoundModel.Attachement">
         <MappingFragment StoreEntitySet="Attachements">
+          <ScalarProperty Name="DateAttached" ColumnName="DateAttached" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
@@ -38,18 +39,19 @@
     <EntitySetMapping Name="Notifications">
       <EntityTypeMapping TypeName="BugHoundModel.Notification">
         <MappingFragment StoreEntitySet="Notifications">
+          <ScalarProperty Name="Recieved" ColumnName="Recieved" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
           <ScalarProperty Name="SentAt" ColumnName="SentAt" />
           <ScalarProperty Name="Notification1" ColumnName="Notification" />
-          <ScalarProperty Name="RecievedBy" ColumnName="RecievedBy" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Priorities">
       <EntityTypeMapping TypeName="BugHoundModel.Priority">
         <MappingFragment StoreEntitySet="Priorities">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -76,6 +78,7 @@
     <EntitySetMapping Name="Status">
       <EntityTypeMapping TypeName="BugHoundModel.Status">
         <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>
@@ -89,7 +92,6 @@
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="PriorityId" ColumnName="PriorityId" />
           <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
           <ScalarProperty Name="TypeId" ColumnName="TypeId" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
           <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
@@ -103,6 +105,7 @@
     <EntitySetMapping Name="Types">
       <EntityTypeMapping TypeName="BugHoundModel.Type">
         <MappingFragment StoreEntitySet="Type">
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
         </MappingFragment>

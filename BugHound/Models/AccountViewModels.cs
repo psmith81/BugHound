@@ -87,6 +87,7 @@ namespace BugHound.Models
          * Phone
          * SupervisorId
          */
+        [Required]
         public string Name { get; set; }
         
         public string Phone { get; set; }

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:bz1s9tta0r.database.windows.net,1433;Database=SmithP-BugHound-db;User ID=CoderFoundry@bz1s9tta0r;Password=LearnToCode!;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\work\\Projects\\BugHound\\BugHound\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="BugHoundSQLEntities-Web.config Connection String" description="BugHoundSQLEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Models.BugHoundEnitites.csdl|res://*/Models.BugHoundEnitites.ssdl|res://*/Models.BugHoundEnitites.msl;provider=System.Data.SqlClient;provider connection string=&quot;Server=tcp:bz1s9tta0r.database.windows.net,1433;Database=SmithP-BugHound-db;User ID=CoderFoundry@bz1s9tta0r;Password=LearnToCode!;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;MultipleActiveResultSets=True;App=EntityFramework&quot;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\work\\Projects\\BugHound\\BugHound\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='BugHoundSQLEntities']/@connectionString" />
+  </parameter>
+</parameters>

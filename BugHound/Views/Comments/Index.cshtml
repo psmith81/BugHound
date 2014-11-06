@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BugHound.Models.Comment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ticket.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @*@Html.DisplayFor(modelItem => item.Comment1)*@
+            <a id="popover-@item.Id" class="btn" href="#" data-content="@item.Comment1" rel="popover" data-placement="bottom" data-original-title="Expanded Comment:" data-trigger="hover">
+
+                @if (!string.IsNullOrEmpty(item.Comment1))
+                {
+                    @item.Comment1.Substring(0, Math.Min(item.Comment1.Length, 50))
+                }
+            </a>
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ticket.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.Name)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+        $(function () {
+            $("[rel='popover']").popover({ container: 'body' });
+        });
+    </script>
+}

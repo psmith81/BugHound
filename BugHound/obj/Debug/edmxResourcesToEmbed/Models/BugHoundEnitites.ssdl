@@ -11,12 +11,13 @@
     <Property Name="FileGUID" Type="uniqueidentifier" Nullable="false" />
     <Property Name="UpLoaded" Type="bit" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="DateAttached" Type="datetimeoffset" Precision="2" />
   </EntityType>
   <EntityType Name="Comments">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="UserId" Type="int" Nullable="false" />
     <Property Name="TicketId" Type="int" Nullable="false" />
     <Property Name="Comment" Type="nvarchar(max)" Nullable="false" />
@@ -40,7 +41,7 @@
     <Property Name="TicketId" Type="int" Nullable="false" />
     <Property Name="SentAt" Type="datetimeoffset" Precision="2" Nullable="false" />
     <Property Name="Notification" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="RecievedBy" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Recieved" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Priorities">
     <Key>
@@ -48,6 +49,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Projects">
     <Key>
@@ -71,6 +73,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SortOrder" Type="int" />
   </EntityType>
   <EntityType Name="Tickets">
     <Key>
@@ -81,7 +84,6 @@
     <Property Name="CreatedOn" Type="datetimeoffset" Precision="2" Nullable="false" />
     <Property Name="PriorityId" Type="int" Nullable="false" />
     <Property Name="Title" Type="nvarchar" MaxLength="256" Nullable="false" />
-    <Property Name="OwnerId" Type="int" Nullable="false" />
     <Property Name="TypeId" Type="int" Nullable="false" />
     <Property Name="StatusId" Type="int" Nullable="false" />
     <Property Name="ProjectId" Type="int" Nullable="false" />
@@ -96,6 +98,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -313,18 +316,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Tickets_Users_Owner">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Users">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Tickets">
-        <PropertyRef Name="OwnerId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Users_Users">
     <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
     <End Role="Users1" Type="Self.Users" Multiplicity="*" />
@@ -414,10 +405,6 @@
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>
     <AssociationSet Name="FK_Tickets_Users_EnteredBy" Association="Self.FK_Tickets_Users_EnteredBy">
-      <End Role="Users" EntitySet="Users" />
-      <End Role="Tickets" EntitySet="Tickets" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Tickets_Users_Owner" Association="Self.FK_Tickets_Users_Owner">
       <End Role="Users" EntitySet="Users" />
       <End Role="Tickets" EntitySet="Tickets" />
     </AssociationSet>

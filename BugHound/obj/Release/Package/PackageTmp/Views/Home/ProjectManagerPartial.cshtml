@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div class="row ">
+    <div class="col-md-12">
+        <div class="bg-primary padded-15">
+            <p>Project Manager: @User.Identity.GetUserName()</p>
+        </div>
+    </div>
+</div>
+<div class="row"><br /></div>
+<div class="row padded-15">
+    <div class="col-md-3 col-md-offset-1">
+        @Html.ActionLink("List Projects", "Index", "Projects", routeValues: null, htmlAttributes: new { @class = "btn  btn-primary btn-md btn-block" })
+    </div>
+    <div class="col-md-3">
+        @Html.ActionLink("New Project", "Create", "Projects", routeValues: null, htmlAttributes: new { @class = "btn  btn-primary btn-md btn-block" })
+    </div>
+</div>
+<div class="row padded-15">
+    <div class="col-md-3 col-md-offset-1">
+        @Html.ActionLink("List Tickets", "Index", "Tickets", routeValues: null, htmlAttributes: new { @class = "btn  btn-primary btn-md btn-block" })
+    </div>
+    <div class="col-md-3">
+        @Html.ActionLink("New Ticket", "Create", "Tickets", routeValues: null, htmlAttributes: new { @class = "btn  btn-primary btn-md btn-block" })
+    </div>
+</div>
+

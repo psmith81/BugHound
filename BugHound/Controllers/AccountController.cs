@@ -289,9 +289,10 @@ namespace BugHound.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult Register()
         {
-            ViewBag.SupervisorId = new SelectList(db.Users, "Id", "Name");
+            //ViewBag.SupervisorId = new SelectList(db.Users, "Id", "Name");
             ViewBag.RoleName = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
-
+            ViewBag.SupervisorId = new SelectList(db.Users.Where(u => u.Active), "Id", "Name");
+            
             return View();
         }
 
@@ -313,7 +314,7 @@ namespace BugHound.Controllers
                 {
                     // await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    var bhuser = new User{ UserName = user.UserName, Name = model.Name, EMail = user.Email, Phone = model.Phone, SupervisorId = model.SupervisorId};
+                    var bhuser = new User{ UserName = user.UserName, Name = model.Name, EMail = user.Email, Phone = model.Phone, SupervisorId = model.SupervisorId, Active = true};
                     db.Users.Add(bhuser);
                     db.SaveChanges();
                     var role = new RegisterViewModel { RoleName = model.RoleName };

@@ -57,16 +57,17 @@ namespace BugHound
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: "650303211754733",
-               appSecret: "6fc7ca569b2788c9367d593fb908fef8");
+            // Facebooks, 
+            //app.UseFacebookAuthentication(
+            //   appId: "650303211754733",
+            //   appSecret: "6fc7ca569b2788c9367d593fb908fef8");
 
-            app.UseGoogleAuthentication(
-                "848034825051-a2puvvv3trq1b0o36tcd17hj56fdtun0.apps.googleusercontent.com",
-                "-bffookm0eFBvb0fm_Z2dCds"
-            );
+            //app.UseGoogleAuthentication(
+            //    "848034825051-a2puvvv3trq1b0o36tcd17hj56fdtun0.apps.googleusercontent.com",
+            //    "-bffookm0eFBvb0fm_Z2dCds"
+            //);
 
-            app.UseLinkedInAuthentication("77hbbwwgy2p8rg", "2eLZjbU6VAh7pHL5");
+            //app.UseLinkedInAuthentication("77hbbwwgy2p8rg", "2eLZjbU6VAh7pHL5");
 
             Seed(new ApplicationDbContext());   // pbs. following added, source Microsoft
         }
