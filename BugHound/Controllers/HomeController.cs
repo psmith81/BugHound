@@ -14,6 +14,7 @@ using BugHound.Models;
 namespace BugHound.Controllers
 {
     [RequireHttps]
+    [Authorize]
     public class HomeController : Controller
     {
         private BugHoundSQLEntities db = new BugHoundSQLEntities();

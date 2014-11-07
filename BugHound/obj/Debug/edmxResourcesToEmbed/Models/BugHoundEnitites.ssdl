@@ -11,6 +11,7 @@
     <Property Name="UpLoaded" Type="bit" Nullable="false" />
     <Property Name="Description" Type="nvarchar(max)" />
     <Property Name="DateAttached" Type="datetimeoffset" Precision="2" />
+    <Property Name="FileUNQName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Comments">
     <Key>

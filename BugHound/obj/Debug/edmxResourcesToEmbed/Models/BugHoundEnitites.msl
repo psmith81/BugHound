@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Attachements">
       <EntityTypeMapping TypeName="BugHoundModel.Attachement">
         <MappingFragment StoreEntitySet="Attachements">
+          <ScalarProperty Name="FileUNQName" ColumnName="FileUNQName" />
           <ScalarProperty Name="DateAttached" ColumnName="DateAttached" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />

@@ -1,0 +1,42 @@
+﻿@model BugHound.Models.AttachmentViewModel
+
+<h2>Add Attachment for @ViewBag.tickettitle</h2>
+
+@using (Html.BeginForm("Create", "Attachements", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Attachement</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(x => x.TicketId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FileObj, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.FileObj, new { @type = "file", @name = "FileObj", @class= "form-control" })
+                @*<input type="file" class="form-control" id="FileObj" name="FileObj" />*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control wide-400 @rows = 3" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Attach" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

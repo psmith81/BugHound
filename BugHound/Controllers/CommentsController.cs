@@ -12,7 +12,8 @@ using Microsoft.AspNet.Identity;
 
 namespace BugHound.Controllers
 {
-    [Authorize]
+    //[Authorize(Roles = "Administrator")]
+    [Authorize]    
     public class CommentsController : Controller
     {
         private BugHoundSQLEntities db = new BugHoundSQLEntities();
@@ -74,7 +75,8 @@ namespace BugHound.Controllers
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("../Tickets/Details/" + comment.TicketId);
             }
 
             //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", comment.TicketId);
