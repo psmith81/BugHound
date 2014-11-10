@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="row"><br /></div>
-                           <div class="row">
+                            <div class="row">
                                 <div class="col-md-2 col-md-offset-1">
                                     @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-md" })
                                 </div>
@@ -162,12 +162,69 @@
                         </div>
                     </div>
                     <div id="pane2" class="tab-pane">
-                        <h4>Pane 2 Content</h4>
-                        <pre>Code stuff...</pre>
-                        <p> and so on ...</p>
-                    </div>
+                        <div class="row"><br /></div>
+                        <div class="row">
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="span3">
+                                        <table class="table table-bordered table-striped table-hover">
+                                            <tr>
+                                                <th></th>
+                                                <th>
+                                                    Attachment File Name
+                                                </th>
+                                                <th>
+                                                    Attachment Description
+                                                </th>
+                                                <th>
+                                                    Actions
+                                                </th>
+                                            </tr>
+                                            @foreach (var item in Model.Attachements)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a class="thumbnail" href="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)">
+                                                            <img src="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)" />
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FileName)
+                                                        @*<a id="file-@item.Id" href="~/Repository/Attachments/@item.Ticket.Id/@item.FileUNQName">@item.FileName</a>*@
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <a id="popover-@item.Id" class="btn" href="" data-content="@item.Description" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
+
+                                                            @if (!string.IsNullOrEmpty(item.Description))
+                                                            {
+                                                                @item.Description.Substring(0, Math.Min(item.Description.Length, 40))
+                                                            }
+                                                        </a>
+                                                        @*@Html.DisplayFor(modelItem => item.Comment1)*@
+                                                    </td>
+                                                    <td>
+                                                        @Html.ActionLink("Download", "Download", "Tickets", new { FileId = item.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-sm" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><br /></div>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-1">
+                                    @Html.ActionLink("New Attachment", "AttachCreate", "Tickets", new { TicketId = Model.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-md" })
+                                </div>
+                            </div>
+                        </div>
                     <div id="pane3" class="tab-pane">
-                        <h4>Pane 3 Content</h4>
+                        <div class="row">
+                            <br />
+
+                        </div>
                     </div>
                 </div><!-- /.tab-content -->
             </div><!-- /.tabbable -->
@@ -175,15 +232,11 @@
     </div>
 </div>
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     <nav>
         <ul class="pager">
             <li class="previous"><a href="@ViewBag.PreviousPage" class="previous">&larr; Return</a></li>
         </ul>
     </nav>
-
-
-
 </p>
 
 @section Scripts{

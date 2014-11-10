@@ -244,6 +244,7 @@
     </Compile>
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utilities\FileThumbnail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -281,8 +282,22 @@
     </Content>
     <None Include="Properties\PublishProfiles\smithp-bughound - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\smithp-bughound - Web Deploy.pubxml" />
+    <Content Include="Repository\Attachments\11\fabc3031-e2b6-4e7f-ab6f-91959c530565Additional Resume Bullets.docx" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="img\favicon.png" />
+    <Content Include="Repository\Attachments\0\0e52cc84-8942-4db8-adc4-256c42452f4bLighthouse.jpg" />
+    <Content Include="Repository\Attachments\0\11fc4eca-5b0e-40f5-b3f3-3c2864bb1f70Lighthouse.jpg" />
+    <Content Include="Repository\Attachments\0\19c07526-4011-4f03-9dbe-8927df2be3d8Penguins.jpg" />
+    <Content Include="Repository\Attachments\0\5b413061-8d14-4783-88e0-a46425e9ea51Lighthouse.jpg" />
+    <Content Include="Repository\Attachments\0\5b63cc73-e4c3-46e3-acb1-8bc9df79e945Penguins.jpg" />
+    <Content Include="Repository\Attachments\0\bdf5c69b-376a-4058-924c-8237bacef648Lighthouse.jpg" />
+    <Content Include="Repository\Attachments\0\e587431b-aeff-48af-a9fc-211a069b2e35Lighthouse.jpg" />
+    <Content Include="Repository\Attachments\0\eaeab337-c962-46b7-9c57-8afc4e4f9afbTulips.jpg" />
+    <Content Include="Repository\Attachments\11\697d931d-cea8-4962-b445-9754cc5212c1TicketNoT1ScreenShot.png" />
+    <Content Include="Repository\Attachments\14\ab24e09b-75ed-451a-b4ba-ece46ea80141Penguins.jpg" />
+    <Content Include="Repository\Attachments\15\acf85b39-3b19-49bf-b859-140f4cbec75bscreenshootTickDet.png" />
+    <Content Include="Repository\Attachments\15\d3777d65-2957-4e99-aed3-a89d9bcc6272TicketNoT1ScreenShot.png" />
+    <Content Include="Repository\Attachments\15\ff01e878-fde9-405e-8d9a-950f08d61e8escreenshootTickDet.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bugHound.js" />
@@ -465,7 +480,6 @@
     <Content Include="Template\js\respond.min.js" />
     <Content Include="Template\js\sparklines.js" />
     <Content Include="Template\js\themes\default.js" />
-    <Content Include="Template\login.html" />
     <Content Include="Template\media.html" />
     <Content Include="Template\post.html" />
     <Content Include="Template\register.html" />
@@ -552,10 +566,10 @@
     <Content Include="Template\fonts\fontawesome-webfont.ttf" />
     <Content Include="Template\fonts\fontawesome-webfont.woff" />
     <Content Include="Template\fonts\FontAwesome.otf" />
+    <Content Include="Template\login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Repository\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

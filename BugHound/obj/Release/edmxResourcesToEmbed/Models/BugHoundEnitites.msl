@@ -4,12 +4,12 @@
     <EntitySetMapping Name="Attachements">
       <EntityTypeMapping TypeName="BugHoundModel.Attachement">
         <MappingFragment StoreEntitySet="Attachements">
+          <ScalarProperty Name="FileUNQName" ColumnName="FileUNQName" />
           <ScalarProperty Name="DateAttached" ColumnName="DateAttached" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
           <ScalarProperty Name="FileName" ColumnName="FileName" />
-          <ScalarProperty Name="FileGUID" ColumnName="FileGUID" />
           <ScalarProperty Name="UpLoaded" ColumnName="UpLoaded" />
           <ScalarProperty Name="Description" ColumnName="Description" />
         </MappingFragment>
@@ -39,12 +39,12 @@
     <EntitySetMapping Name="Notifications">
       <EntityTypeMapping TypeName="BugHoundModel.Notification">
         <MappingFragment StoreEntitySet="Notifications">
+          <ScalarProperty Name="Recieved" ColumnName="Recieved" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
           <ScalarProperty Name="TicketId" ColumnName="TicketId" />
           <ScalarProperty Name="SentAt" ColumnName="SentAt" />
           <ScalarProperty Name="Notification1" ColumnName="Notification" />
-          <ScalarProperty Name="RecievedBy" ColumnName="RecievedBy" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

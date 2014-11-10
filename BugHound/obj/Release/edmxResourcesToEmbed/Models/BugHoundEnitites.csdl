@@ -8,12 +8,12 @@
     <Property Name="UserId" Type="Int32" Nullable="false" />
     <Property Name="TicketId" Type="Int32" Nullable="false" />
     <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="FileGUID" Type="Guid" Nullable="false" />
     <Property Name="UpLoaded" Type="Boolean" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Ticket" Relationship="Self.FK_Attachements_Tickets" FromRole="Attachements" ToRole="Tickets" />
     <NavigationProperty Name="User" Relationship="Self.FK_Attachements_Users" FromRole="Attachements" ToRole="Users" />
     <Property Name="DateAttached" Type="DateTimeOffset" Precision="2" />
+    <Property Name="FileUNQName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Comment">
     <Key>
@@ -47,9 +47,9 @@
     <Property Name="TicketId" Type="Int32" Nullable="false" />
     <Property Name="SentAt" Type="DateTimeOffset" Nullable="false" Precision="2" />
     <Property Name="Notification1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="RecievedBy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Ticket" Relationship="Self.FK_Notifications_Tickets" FromRole="Notifications" ToRole="Tickets" />
     <NavigationProperty Name="User" Relationship="Self.FK_Notifications_Users" FromRole="Notifications" ToRole="Users" />
+    <Property Name="Recieved" Type="Boolean" Nullable="false" />
   </EntityType>
   <EntityType Name="Priority">
     <Key>
@@ -149,8 +149,8 @@
     <Property Name="Active" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_Attachements_Tickets">
-    <End Role="Tickets" Type="Self.Ticket" Multiplicity="1" />
-    <End Role="Attachements" Type="Self.Attachement" Multiplicity="*" />
+    <End Type="Self.Ticket" Multiplicity="1" Role="Tickets" />
+    <End Type="Self.Attachement" Multiplicity="*" Role="Attachements" />
     <ReferentialConstraint>
       <Principal Role="Tickets">
         <PropertyRef Name="Id" />
@@ -377,8 +377,8 @@
     <EntitySet Name="Types" EntityType="Self.Type" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="FK_Attachements_Tickets" Association="Self.FK_Attachements_Tickets">
-      <End Role="Tickets" EntitySet="Tickets" />
-      <End Role="Attachements" EntitySet="Attachements" />
+      <End EntitySet="Tickets" Role="Tickets" />
+      <End EntitySet="Attachements" Role="Attachements" />
     </AssociationSet>
     <AssociationSet Name="FK_Attachements_Users" Association="Self.FK_Attachements_Users">
       <End Role="Users" EntitySet="Users" />

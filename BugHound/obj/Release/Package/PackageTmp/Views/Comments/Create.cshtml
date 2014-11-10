@@ -54,5 +54,11 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <p>
+        <nav>
+            <ul class="pager">
+                <li class="previous"><a href="@ViewBag.PreviousPage" class="previous">&larr; Return</a></li>
+            </ul>
+        </nav>
+    </p>
 </div>
