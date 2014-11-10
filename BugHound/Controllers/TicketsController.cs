@@ -178,21 +178,21 @@ namespace BugHound.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: Attachements/Create
-        public ActionResult AttachCreate(int? ticketid)
-        {
-            if (ticketid == null)
-            {
-                ViewBag.tickettitle = "---";
-            }
-            else
-            {
-                var ct = db.Tickets.Single(i => i.Id == ticketid);
-                ViewBag.tickettitle = ct.Title;
-            }
-            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
-            return View();
-        }
+        //// GET: Attachements/Create
+        //public ActionResult AttachCreate(int? ticketid)
+        //{
+        //    if (ticketid == null)
+        //    {
+        //        ViewBag.tickettitle = "---";
+        //    }
+        //    else
+        //    {
+        //        var ct = db.Tickets.Single(i => i.Id == ticketid);
+        //        ViewBag.tickettitle = ct.Title;
+        //    }
+        //    ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
+        //    return View();
+        //}
 
         // POST: Attachements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -219,8 +219,8 @@ namespace BugHound.Controllers
                         UpLoaded = true
                     };
 
-                    var path = HttpContext.Server.MapPath("~/App_Data/Attachments/" + attachmentVm.TicketId + "/");
-                    var fullPath = Path.Combine(path, attachment.FileUNQName);
+                    var path = HttpContext.Server.MapPath("~/Repository/Attachments/" + attachmentVm.TicketId + "/");
+                    var fullName = Path.Combine(path, attachment.FileUNQName);
 
                     if (!Directory.Exists(path))
                     {
@@ -228,7 +228,7 @@ namespace BugHound.Controllers
                         Directory.CreateDirectory(path);
                     }
 
-                    attachmentVm.FileObj.SaveAs(fullPath);
+                    attachmentVm.FileObj.SaveAs(fullName);
 
                     db.Attachements.Add(attachment);
                     db.SaveChanges();
@@ -246,7 +246,7 @@ namespace BugHound.Controllers
         {
             //var document = db.Attachements.Single(a => a.Id == FileId);
             var document = db.Attachements.Single(a => a.Id == FileId);             //Attachements.Single(a => a.Id == FileId);
-            var FileName = "~/App_Data/Attachments/" + document.Ticket.Id + "/" + document.FileUNQName;
+            var FileName = "~/Repository/Attachments/" + document.Ticket.Id + "/" + document.FileUNQName;
 
             //var cd = new System.Net.Mime.ContentDisposition
             //{
@@ -277,7 +277,7 @@ namespace BugHound.Controllers
 
        //public FileResult Downloads() 
        //{ 
-       //    var dir = new System.IO.DirectoryInfo(Server.MapPath("~/App_Data/Images/")); 
+       //    var dir = new System.IO.DirectoryInfo(Server.MapPath("~/Repository/Images/")); 
        //    System.IO.FileInfo[] fileNames = dir.GetFiles("*.*"); 
        //    List<string> items = new List<string>(); 
        //    foreach (var file in fileNames) 

@@ -84,7 +84,7 @@ namespace BugHound.Controllers
                         UpLoaded = true
                     };
 
-                    var path = HttpContext.Server.MapPath("~/App_Data/Attachments/" + attachmentVm.TicketId + "/");
+                    var path = HttpContext.Server.MapPath("~/Repository/Attachments/" + attachmentVm.TicketId + "/");
                     var fullPath = Path.Combine(path, attachment.FileUNQName);
 
                     if (!Directory.Exists(path))

@@ -170,6 +170,7 @@
                                     <div class="span3">
                                         <table class="table table-bordered table-striped table-hover">
                                             <tr>
+                                                <th></th>
                                                 <th>
                                                     Attachment File Name
                                                 </th>
@@ -183,16 +184,14 @@
                                             @foreach (var item in Model.Attachements)
                                             {
                                                 <tr>
-                                                    <a class="thumbnail" href="#">
-                                                        <img src="@Url.Content("~/App_Data/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)" />
-                                                        @* set up the hover image *@
-                                                        <span>
-                                                            <img src="@Url.Content("~/App_Data/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)" width="550">
-                                                        </span>
-                                                    </a>
+                                                    <td>
+                                                        <a class="thumbnail" href="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)">
+                                                            <img src="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)" />
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.FileName)
-                                                        @*<a id="file-@item.Id" href="~/App_Data/Attachments/@item.Ticket.Id/@item.FileUNQName">@item.FileName</a>*@
+                                                        @*<a id="file-@item.Id" href="~/Repository/Attachments/@item.Ticket.Id/@item.FileUNQName">@item.FileName</a>*@
                                                         
                                                     </td>
                                                     <td>

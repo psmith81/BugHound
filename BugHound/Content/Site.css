@@ -59,3 +59,9 @@ textarea {
     overflow: auto;
 }​
 
+.thumbnail {
+    position: relative;
+    float: left;
+    padding: 0px;
+    width: 100px;
+}
