@@ -11,12 +11,14 @@ namespace BugHound.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Comment
     {
         public int Id { get; set; }
         public int UserId { get; set; }
         public int TicketId { get; set; }
+        [Required]
         public string Comment1 { get; set; }
     
         public virtual Ticket Ticket { get; set; }

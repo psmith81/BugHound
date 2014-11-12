@@ -49,6 +49,7 @@ namespace BugHound.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Ticket ticket = db.Tickets.Find(id);
+            ticket.Comments = ticket.Comments.OrderByDescending(m => m.Id).ToList();
             if (ticket == null)
             {
                 return HttpNotFound();
@@ -259,47 +260,5 @@ namespace BugHound.Controllers
             //Response.AppendHeader("Content-Disposition", cd.ToString());
             return File(FileName, "file", document.FileName );
         }
-
-        // GET: StatusChange
-        public ActionResult StatusChange(int? ticketid)
-        {
-            if (ticketid == null)
-            {
-                ViewBag.tickettitle = "---";
-            }
-            else
-            {
-                var ct = db.Tickets.Single(i => i.Id == ticketid);
-                ViewBag.tickettitle = ct.Title;
-            }
-            ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
-            
-            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
-
-            return View();
-        }
-
-        // POST: Ticketes/StatusChange
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult StatusChange([Bind(Include = "UserId,TicketId,Comment1")] Comment comment)
-        {
-            if (ModelState.IsValid)
-            {
-                var cu = User.Identity.GetUserName();
-                var usrs = db.Users.Single(u => u.UserName == cu);
-                comment.UserId = usrs.Id;
-
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                //return RedirectToAction("Index");
-                return RedirectToAction("../Tickets/Details/" + comment.TicketId);
-            }
-
-            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", comment.TicketId);
-            //ViewBag.UserId = new SelectList(db.Users, "Id", "Name", comment.UserId);
-            return View(comment);
-        }
-
     }
 }

@@ -31,6 +31,14 @@
         {
             <h3>Status: <span class="label label-success">Open</span></h3>
         }
+        @if (Model.Status.Name == "Closed")
+        {
+            <h3>Status: <span class="label label-default">Closed</span></h3>
+        }
+        @if (Model.Status.Name == "On Hold")
+        {
+            <h3>Status: <span class="label label-warning">On Hold</span></h3>
+        }
 
     </div>
     <div class="col-md-3">
@@ -191,7 +199,7 @@
                             <div class="col-md-5 col-md-offset-1">
                                 <div class="btn-group-justified">
                                     @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
-                                    @Html.ActionLink("Change Status", "StatusChange", "Tickets", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                    @Html.ActionLink("Change Status", "StatusChange", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
                                 </div>
                             </div>
                         </div>

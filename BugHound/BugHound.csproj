@@ -592,7 +592,7 @@
     <Content Include="Template\fonts\FontAwesome.otf" />
     <Content Include="Template\login.cshtml" />
     <Content Include="Views\Shared\_Layout_bak.cshtml" />
-    <Content Include="Views\Tickets\StatusChange.cshtml" />
+    <Content Include="Views\Comments\StatusChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

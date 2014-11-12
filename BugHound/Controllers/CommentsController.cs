@@ -153,5 +153,61 @@ namespace BugHound.Controllers
             }
             base.Dispose(disposing);
         }
+
+        // GET: StatusChange
+        public ActionResult StatusChange(int? ticketid)
+        {
+            if (ticketid == null)
+            {
+                ViewBag.tickettitle = "---";
+            }
+            else
+            {
+                var ct = db.Tickets.Single(i => i.Id == ticketid);
+                ViewBag.tickettitle = ct.Title;
+            }
+
+            ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
+            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
+            ViewBag.SCMessage = "";
+
+            return View();
+        }
+
+        // POST: Ticketes/StatusChange
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StatusChange([Bind(Include = "UserId,TicketId,Comment1")] Comment comment, [Bind(Include = "Id,StatusId")] Ticket status)
+        {
+            if (ModelState.IsValid)
+            {
+                if (comment.Comment1 == null)
+                {
+                    ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
+                    ViewBag.SCMessage = "Please comment on the status change.";
+                     
+                    return View(comment);
+                }
+                var cu = User.Identity.GetUserName();
+                var usrs = db.Users.Single(u => u.UserName == cu);
+                comment.UserId = usrs.Id;
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+
+                var ct = db.Tickets.Single(id => id.Id == comment.TicketId);
+                ct.StatusId = status.StatusId;
+                db.Entry(ct).State = EntityState.Modified;
+                db.SaveChanges();
+                //return RedirectToAction("Index");
+                return RedirectToAction("../Tickets/Details/" + comment.TicketId);
+            }
+
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", comment.TicketId);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "Name", comment.UserId);
+            ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
+            return View(comment);
+        }
+
     }
 }
