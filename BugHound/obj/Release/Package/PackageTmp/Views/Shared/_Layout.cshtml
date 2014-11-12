@@ -1,50 +1,135 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <!-- Title and other stuffs -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Coder Foundry Master Class Project">
+    <meta name="keywords" content="''Coder Foundry', bug tracker">
+    <meta name="author" content="Peter Smith">
+
     <title>@ViewBag.Title - BugHound</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("~/Content/css")*@
+    
+    <!-- Stylesheets -->
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet">
+    <!-- Font awesome icon -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="~/Content/jquery-ui.css">
+    <!-- Calendar -->
+    <link rel="stylesheet" href="~/Content/fullcalendar.css">
+    <!-- prettyPhoto -->
+    <link rel="stylesheet" href="~/Content/prettyPhoto.css">
+    <!-- Star rating -->
+    <link rel="stylesheet" href="~/Content/rateit.css">
+    <!-- Date picker -->
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css">
+    <!-- CLEditor -->
+    <link rel="stylesheet" href="~/Content/jquery.cleditor.css">
+    <!-- Data tables -->
+    <link rel="stylesheet" href="~/Content/jquery.dataTables.css">
+    <!-- Bootstrap toggle -->
+    <link rel="stylesheet" href="~/Content/jquery.onoff.css">
+    <!-- Main stylesheet -->
+    <link href="~/Content/style.css" rel="stylesheet">
+    <!-- Widgets stylesheet -->
+    <link href="~/Content/widgets.css" rel="stylesheet">
+    <!-- My CSS Addins -->
+    <link href="~/Content/site.css" rel="sytlesheet" />
+
+    <script src="~/Template/js/respond.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="Template/js/html5shiv.js"></script>
+    <![endif]-->
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/img/favicon/favicon.png">
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar">a</span>
-                    <span class="icon-bar">b</span>
-                    <span class="icon-bar">c</span>
-                </button>
-                <img src="~/img/theBugHound.jpg" height="49" /> Bughound
-                @Html.ActionLink("BugHound", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        if (User.IsInRole("Administrator"))
-                        {
-                            <li class="dropdown">
-                                <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                    <li>@Html.ActionLink("Users", "Index", "Users")</li>
-                                </ul>
-                            </li>
-                        }
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <!-- Matter 
+
+    <div class="matter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="widget">
+                        <div class="widget-head">
+                            <div class="pull-left">Title</div>
+                            <div class="widget-icons pull-right">
+                                <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                                <a href="#" class="wclose"><i class="fa fa-times"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="widget-content">
+                            <div class="padd">
+                                <!-- Content goes here 
+                            </div>
+                            <div class="widget-foot">
+                                <!-- Footer goes here 
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Matter ends -->
+
+    <!-- Page heading -->
+    <div class="page-head">
+        <!-- My Orginal Nav -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    
+                    @*<img src="~/img/BugHound.png" height="49" />
+                    @Html.ActionLink("BugHound", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                        <div >
+                            <a title="BugHound Home" class="" href="~/Home/Index" target="_blank">
+                                <img src="~/img/BugHound.png" style="border: 0; float: left; margin-right: 15px; height:49px" />
+                            </a>
+                        </div>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Administrator"))
+                            {
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Admin</a>
+                                    <ul class="dropdown-menu dropdown-menu-left">
+                                        <li>@Html.ActionLink("Users", "Index", "Users")</li>
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
+            </div>
+        </div>
+        <!-- End of My Orginal Nav -->
+    </div>
+    <!-- Page heading ends -->
+    <!-- Mainbar ends -->
+    <div class="clearfix"></div>
+
     <div class="container body-content">
-        @RenderBody()
+        <div class="padd">
+            <!-- Content goes here -->
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>
@@ -57,5 +142,38 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <!-- JS -->
+    <script src="~/Template/js/jquery.js"></script> <!-- jQuery -->
+    <script src="~/Template/js/bootstrap.min.js"></script> <!-- Bootstrap -->
+    <script src="~/Template/js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+    <script src="~/Template/js/fullcalendar.min.js"></script> <!-- Full Google Calendar - Calendar -->
+    <script src="~/Template/js/jquery.rateit.min.js"></script> <!-- RateIt - Star rating -->
+    <script src="~/Template/js/jquery.prettyPhoto.js"></script> <!-- prettyPhoto -->
+    <script src="~/Template/js/jquery.slimscroll.min.js"></script> <!-- jQuery Slim Scroll -->
+    <script src="~/Template/js/jquery.dataTables.min.js"></script> <!-- Data tables -->
+    <!-- jQuery Flot -->
+    <script src="~/Template/js/excanvas.min.js"></script>
+    <script src="~/Template/js/jquery.flot.js"></script>
+    <script src="~/Template/js/jquery.flot.resize.js"></script>
+    <script src="~/Template/js/jquery.flot.pie.js"></script>
+    <script src="~/Template/js/jquery.flot.stack.js"></script>
+
+    <!-- jQuery Notification - Noty -->
+    <script src="~/Template/js/jquery.noty.js"></script> <!-- jQuery Notify -->
+    <script src="~/Template/js/themes/default.js"></script> <!-- jQuery Notify -->
+    <script src="~/Template/js/layouts/bottom.js"></script> <!-- jQuery Notify -->
+    <script src="~/Template/js/layouts/topRight.js"></script> <!-- jQuery Notify -->
+    <script src="~/Template/js/layouts/top.js"></script> <!-- jQuery Notify -->
+    <!-- jQuery Notification ends -->
+
+    <script src="~/Template/js/sparklines.js"></script> <!-- Sparklines -->
+    <script src="~/Template/js/jquery.cleditor.min.js"></script> <!-- CLEditor -->
+    <script src="~/Template/js/bootstrap-datetimepicker.min.js"></script> <!-- Date picker -->
+    <script src="~/Template/js/jquery.onoff.min.js"></script> <!-- Bootstrap Toggle -->
+    <script src="~/Template/js/filter.js"></script> <!-- Filter for support page -->
+    <script src="~/Template/js/custom.js"></script> <!-- Custom codes -->
+    <script src="~/Template/js/charts.js"></script> <!-- Charts & Graphs -->
+
 </body>
 </html>

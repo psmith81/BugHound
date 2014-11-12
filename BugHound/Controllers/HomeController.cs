@@ -19,6 +19,7 @@ namespace BugHound.Controllers
     {
         private BugHoundSQLEntities db = new BugHoundSQLEntities();
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var cu = User.Identity.GetUserName();

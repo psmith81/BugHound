@@ -247,10 +247,6 @@
     <Compile Include="Utilities\FileThumbnail.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -259,12 +255,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <EntityDeploy Include="Models\BugHoundEnitites.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>BugHoundEnitites.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="img\BugHound.png" />
     <Content Include="img\CFLogo.png" />
     <Content Include="img\theBugHound.jpg" />
     <Content Include="Models\BugHoundEnitites.Context.tt">
@@ -324,6 +319,31 @@
     <Content Include="Template\0-base.html" />
     <Content Include="Template\calendar.html" />
     <Content Include="Template\charts.html" />
+    <Content Include="Content\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fullcalendar.css" />
+    <Content Include="Content\images\animated-overlay.gif" />
+    <Content Include="Content\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery.cleditor.css" />
+    <Content Include="Content\jquery.dataTables.css" />
+    <Content Include="Content\jquery.onoff.css" />
+    <Content Include="Content\prettyPhoto.css" />
+    <Content Include="Content\rateit.css" />
     <Content Include="Template\css\bootstrap-datetimepicker.min.css" />
     <Content Include="Template\css\bootstrap.css" />
     <Content Include="Template\css\bootstrap.min.css" />
@@ -347,8 +367,12 @@
     <Content Include="Template\css\jquery.cleditor.css" />
     <Content Include="Template\css\jquery.dataTables.css" />
     <Content Include="Template\css\jquery.onoff.css" />
+    <Content Include="Template\css\PagedList.css" />
     <Content Include="Template\css\prettyPhoto.css" />
     <Content Include="Template\css\rateit.css" />
+    <Content Include="Template\css\Site.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\widgets.css" />
     <Content Include="Template\css\style.css" />
     <Content Include="Template\css\widgets.css" />
     <Content Include="Template\dynamic-tables.html" />
@@ -490,6 +514,7 @@
     <Content Include="Template\widgets1.html" />
     <Content Include="Template\widgets2.html" />
     <Content Include="Template\widgets3.html" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -502,7 +527,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -567,6 +591,8 @@
     <Content Include="Template\fonts\fontawesome-webfont.woff" />
     <Content Include="Template\fonts\FontAwesome.otf" />
     <Content Include="Template\login.cshtml" />
+    <Content Include="Views\Shared\_Layout_bak.cshtml" />
+    <Content Include="Views\Tickets\StatusChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

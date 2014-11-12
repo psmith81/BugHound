@@ -1,142 +1,171 @@
 ﻿@model BugHound.Models.Ticket
 
-@{
-    ViewBag.Title = "Details";
-}
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <h2>Bug Ticket: <u> @Html.DisplayFor(model => model.Title) </u></h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @*<h4>Ticket No. @Html.DisplayFor(model => model.Id)</h4>*@
+        @if (Model.Priority.Name == "Critical")
+        {
+            <h3>Priority: <span class="label label-danger">Critical</span></h3>
+        }
+        @if (Model.Priority.Name == "High")
+        {
+            <h3>Priority: <span class="label label-warning">High</span></h3>
+        }
+        @if (Model.Priority.Name == "Medium")
+        {
+            <h3>Priority: <span class="label label-info">Medium</span></h3>
+        }
+        @if (Model.Priority.Name == "Low")
+        {
+            <h3>Priority: <span class="label label-default">Low</span></h3>
+        }
+    </div>
+    <div class="col-md-2">
+        @if (Model.Status.Name == "Open")
+        {
+            <h3>Status: <span class="label label-success">Open</span></h3>
+        }
 
-<h2>Details</h2>
-
-<div>
-    <h4>Ticket</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-5">
-            <dl class="dl-horizontal">
-                <dt>
+    </div>
+    <div class="col-md-3">
+        <h3>Part of the <u> @Html.DisplayFor(model => model.Project.Name) </u> project.</h3>
+    </div>
+    <div class="col-md-5">
+        <h3>Reported as:<u> @Html.DisplayFor(model => model.Type.Name)</u></h3>
+    </div>
+</div>
+<div class="row"><hr /><br /></div>
+<div class="row">
+    <div class="col-md-5">
+        <dl class="dl-horizontal">
+            @*<dt>
                     @Html.DisplayNameFor(model => model.CreatedOn)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.CreatedOn)
-                </dd>
+                </dd>*@
 
-                <dt>
+            @*<dt>
                     @Html.DisplayNameFor(model => model.Title)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Title)
-                </dd>
+                </dd>*@
 
-                <dt>
+            @*<dt>
                     @Html.DisplayNameFor(model => model.LastedUpdated)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.LastedUpdated)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Narration)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Narration)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Narration)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Narration)
+            </dd>
 
-                <dt>
+            @*<dt>
                     @Html.DisplayNameFor(model => model.Attachments)
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Attachments)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.Priority.Name)*@
+            @*<dt>
+
                     Priority
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Priority.Name)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.Project.Name)*@
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Project.Name)
                     Project
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Project.Name)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.Status.Name)*@
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Status.Name)
                     Status
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Status.Name)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.Type.Name)*@
+            @*<dt>
+                    @Html.DisplayNameFor(model => model.Type.Name)
                     Type
                 </dt>
 
                 <dd>
                     @Html.DisplayFor(model => model.Type.Name)
-                </dd>
+                </dd>*@
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.User.Name)*@
-                    Assigned To
-                </dt>
+            <dt>
+                @*@Html.DisplayNameFor(model => model.User.Name)*@
+                Assigned To
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User.Name)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.User.Name)
+            </dd>
 
-                <dt>
-                    @*@Html.DisplayNameFor(model => model.User1.Name)*@
-                    Entered By
-                </dt>
+            <dt>
+                @*@Html.DisplayNameFor(model => model.User1.Name)*@
+                Entered By
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.User1.Name)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.User1.Name)
+            </dd>
 
-            </dl>
-        </div>
-        <div class="col-md-7">
-            <div class="tabbable">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#pane1" data-toggle="tab">Comments</a></li>
-                    <li><a href="#pane2" data-toggle="tab">Attachments</a></li>
-                    <li><a href="#pane3" data-toggle="tab">Histories</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="pane1" class="tab-pane active">
+        </dl>
+    </div>
+    <div class="col-md-7">
+        <div class="tabbable">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#pane1" data-toggle="tab">Comments</a></li>
+                <li><a href="#pane2" data-toggle="tab">Attachments</a></li>
+                <li><a href="#pane3" data-toggle="tab">History</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="pane1" class="tab-pane active">
+                    <div class="well">
                         <div class="row">
-                            <br />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="span3">
+                            <div class="col-md-12">
+                                <div class="span3">
+                                    <div style="height:300px; overflow:auto">
                                         <table class="table table-bordered table-striped table-hover">
                                             <tr>
                                                 <th>
-                                                    Made By
+                                                    Comment
                                                 </th>
                                                 <th>
-                                                    Comment
+                                                    Made By
                                                 </th>
                                             </tr>
                                             @foreach (var item in Model.Comments)
                                             {
                                                 <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.User.Name)
-                                                    </td>
                                                     <td>
                                                         <a id="popover-@item.Id" class="btn" href="" data-content="@item.Comment1" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
 
@@ -147,90 +176,90 @@
                                                         </a>
                                                         @*@Html.DisplayFor(modelItem => item.Comment1)*@
                                                     </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.User.Name)
+                                                    </td>
                                                 </tr>
                                             }
                                         </table>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row"><br /></div>
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-1">
-                                    @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-md" })
-                                </div>
+                                </div><!--end of span-->
                             </div>
                         </div>
-                    </div>
-                    <div id="pane2" class="tab-pane">
                         <div class="row"><br /></div>
                         <div class="row">
-                            <br />
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="span3">
-                                        <table class="table table-bordered table-striped table-hover">
-                                            <tr>
-                                                <th></th>
-                                                <th>
-                                                    Attachment File Name
-                                                </th>
-                                                <th>
-                                                    Attachment Description
-                                                </th>
-                                                <th>
-                                                    Actions
-                                                </th>
-                                            </tr>
-                                            @foreach (var item in Model.Attachements)
-                                            {
-                                                <tr>
-                                                    <td>
-                                                        <a class="thumbnail" href="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)">
-                                                            <img src="@Url.Content("~/Repository/Attachments/"+@item.Ticket.Id+"/"+@item.FileUNQName)" />
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(modelItem => item.FileName)
-                                                        @*<a id="file-@item.Id" href="~/Repository/Attachments/@item.Ticket.Id/@item.FileUNQName">@item.FileName</a>*@
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <a id="popover-@item.Id" class="btn" href="" data-content="@item.Description" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
-
-                                                            @if (!string.IsNullOrEmpty(item.Description))
-                                                            {
-                                                                @item.Description.Substring(0, Math.Min(item.Description.Length, 40))
-                                                            }
-                                                        </a>
-                                                        @*@Html.DisplayFor(modelItem => item.Comment1)*@
-                                                    </td>
-                                                    <td>
-                                                        @Html.ActionLink("Download", "Download", "Tickets", new { FileId = item.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-sm" })
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </table>
-                                    </div>
+                            <div class="col-md-5 col-md-offset-1">
+                                <div class="btn-group-justified">
+                                    @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                    @Html.ActionLink("Change Status", "StatusChange", "Tickets", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
                                 </div>
                             </div>
-                            <div class="row"><br /></div>
-                            <div class="row">
-                                <div class="col-md-2 col-md-offset-1">
-                                    @Html.ActionLink("New Attachment", "AttachCreate", "Tickets", new { TicketId = Model.Id }, htmlAttributes: new { @class = "btn  btn-primary btn-md" })
-                                </div>
-                            </div>
-                        </div>
-                    <div id="pane3" class="tab-pane">
-                        <div class="row">
-                            <br />
-
                         </div>
                     </div>
-                </div><!-- /.tab-content -->
-            </div><!-- /.tabbable -->
+                </div>
+                <div id="pane2" class="tab-pane">
+                    @*<div class="row"><br /></div>*@
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="span3">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <tr>
+                                            @*<th>
+                                                    Attachment File Name
+                                                </th>*@
+                                            <th>
+                                                Attachment Description
+                                            </th>
+                                            <th>
+                                                Actions
+                                            </th>
+                                        </tr>
+                                        @foreach (var item in Model.Attachements)
+                                        {
+                                            <tr>
+                                                @*<td>
+                                                        @Html.DisplayFor(modelItem => item.FileName)
+                                                    </td>*@
+                                                <td>
+                                                    <a id="popover-@item.Id" class="btn" href="" data-content="@item.Description" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
+
+                                                        @if (!string.IsNullOrEmpty(item.Description))
+                                                        {
+                                                            @item.Description.Substring(0, Math.Min(item.Description.Length, 40))
+                                                        }
+                                                    </a>
+                                                    @*@Html.DisplayFor(modelItem => item.Comment1)*@
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Download", "Download", "Tickets", new { FileId = item.Id }, htmlAttributes: new { @class = "btn  btn-default btn-sm" })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row"><br /></div>
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-1">
+                                @Html.ActionLink("New Attachment", "AttachCreate", "Tickets", new { TicketId = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.tabbable -->
+                <div id="pane3" class="tab-pane">
+                    <div class="well">
+                        <div class="row">
+                            <p>History</p>
+                        </div>
+                    </div>
+                </div><!-- /.tab-content-->
+            </div>
         </div>
     </div>
 </div>
+
 <p>
     <nav>
         <ul class="pager">
@@ -255,5 +284,5 @@
                           '</div>'
             });
         });
-</script>
+    </script>
 }

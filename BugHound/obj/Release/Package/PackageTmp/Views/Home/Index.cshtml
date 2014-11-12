@@ -12,113 +12,150 @@
         <img src="~/img/theBugHound.jpg" width="30%" />
     </div>
 *@
-<h1>BugHound</h1>
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
-
-            <img src="~/img/theBugHound.jpg" width="80%" />
-        </div>
-        <div class="col-md-8 bg-info">
-            <div class="row">
-                @if (User.IsInRole("Administrator"))
-                {
-                    @Html.Partial("AdministratorPartial")
-                }
-                @if (User.IsInRole("Project Manager"))
-                {
-                    @Html.Partial("ProjectManagerPartial")
-                }
-                @if (User.IsInRole("Developer"))
-                {
-                    @Html.Partial("DeveloperPartial")
-                }
-                @if (User.IsInRole("Support"))
-                {
-                    @Html.Partial("SupportPartial")
-                }
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/img/BugHound.png" width="80%" />
             </div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <div class="row">
-                    <br />
-                </div>
-                <div class="row">
-                    <div class="col-md-4 ">
-                        <div class="padded-15">
-                            <strong>Your Top 5 Tickets:</strong>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <table class="table table-bordered table-striped">
-                            <tr >
-                                <th>
-                                    Ticket
-                                </th>
-                                <th>
-                                    Priortity
-                                </th>
-                                <th>
-                                    Project
-                                </th>
-                            </tr>
-                            @foreach (var item in Model)
+            <div class="col-md-8">
+                <div class="widget">
+                    <!-- Widget title -->
+                    <div class="widget-head">
+                        <div class="pull-left">
+
+                            @if (User.IsInRole("Administrator"))
                             {
-                                if (item.Priority.Name == "Critical")
-                                {
-                                    <tr class="danger">
-                                        <td>
-                                            @*@Html.DisplayFor(modelItem => item.Title)*@
-                                            @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Priority.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Project.Name)
-                                        </td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Priority.Name)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Project.Name)
-                                        </td>
-                                    </tr>
-                                }
+                            <p>Administrator:</p>
                             }
-                        </table>
+                            @if (User.IsInRole("Project Manager"))
+                            {
+                            <p>Project Manager: </p>
+                            }
+                            @if (User.IsInRole("Developer"))
+                            {
+                            <p>Developer: </p>
+                            }
+                            @if (User.IsInRole("Support"))
+                            {
+                            <p>Support:</p>
+                            }
+                        </div>
+                        <div class="widget-icons pull-right">
+                            <a href="#" class="wminimize"><i class="fa fa-chevron-up"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
                     </div>
-                    <div class="row padded-15">
-                        <div class="col-md-12"><br /></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class=" footer">
-                                <p>BugHound Bug Tracker</p>
+                    <div class="widget-content">
+                        <!-- Widget content -->
+                        <div class="padd">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (User.IsInRole("Administrator"))
+                                        {
+                                    @Html.Partial("AdministratorPartial")
+                                        }
+                                    @if (User.IsInRole("Project Manager"))
+                                        {
+                                    @Html.Partial("ProjectManagerPartial")
+                                        }
+                                    @if (User.IsInRole("Developer"))
+                                        {
+                                    @Html.Partial("DeveloperPartial")
+                                        }
+                                    @if (User.IsInRole("Support"))
+                                        {
+                                    @Html.Partial("SupportPartial")
+                                        }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <div class="row">
+                                            <br />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 ">
+                                                <div class="padded-15">
+                                                    <strong>Your Top 5 Tickets:</strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-10 col-md-offset-1">
+                                                <table class="table table-bordered table-striped">
+                                                    <tr>
+                                                        <th>
+                                                            Ticket
+                                                        </th>
+                                                        <th>
+                                                            Priortity
+                                                        </th>
+                                                        <th>
+                                                            Project
+                                                        </th>
+                                                    </tr>
+                                                    @foreach (var item in Model)
+                                                    {
+                                                        if (item.Priority.Name == "Critical")
+                                                        {
+                                                            <tr class="danger">
+                                                                <td>
+                                                                    @*@Html.DisplayFor(modelItem => item.Title)*@
+                                                                    @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                                </td>
+                                                                <td>
+                                                                    @Html.DisplayFor(modelItem => item.Project.Name)
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="row padded-15">
+                                            <div class="alert alert-warning">
+                                                <p>Welcome to BUG HOUND, please login.</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="widget-foot">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <p>BugHound Bug Tracker</p>
+                        }
+                    </div>
+                    <!-- End of Widget -->
                 </div>
-            }
-            else
-            {
-                <div class="row padded-15">
-                    <p>Welcome to BugHound, please login.</p>
-                </div>
-            }
+            </div>
         </div>
     </div>
-
 </div>

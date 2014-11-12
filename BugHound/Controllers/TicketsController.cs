@@ -260,32 +260,46 @@ namespace BugHound.Controllers
             return File(FileName, "file", document.FileName );
         }
 
-        //public FileResult Download(string id)
-        //{
-        //    int fid = Convert.ToInt32(id);
-        //    var files = objData.GetFiles();
-        //    string filename = (from f in files
-        //                       where f.FileId == fid
-        //                       select f.FilePath).First();
-        //    string contentType = "application/pdf";
-        //    //Parameters to file are
-        //    //1. The File Path on the File Server
-        //    //2. The content type MIME type
-        //    //3. The parameter for the file save by the browser
-        //    return File(filename, contentType, "Report.pdf");
-        //}
+        // GET: StatusChange
+        public ActionResult StatusChange(int? ticketid)
+        {
+            if (ticketid == null)
+            {
+                ViewBag.tickettitle = "---";
+            }
+            else
+            {
+                var ct = db.Tickets.Single(i => i.Id == ticketid);
+                ViewBag.tickettitle = ct.Title;
+            }
+            ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
+            
+            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
 
-       //public FileResult Downloads() 
-       //{ 
-       //    var dir = new System.IO.DirectoryInfo(Server.MapPath("~/Repository/Images/")); 
-       //    System.IO.FileInfo[] fileNames = dir.GetFiles("*.*"); 
-       //    List<string> items = new List<string>(); 
-       //    foreach (var file in fileNames) 
-       //    { 
-       //        items.Add(file.Name); 
-       //    } 
-       //    return View(items); 
-       //}
+            return View();
+        }
+
+        // POST: Ticketes/StatusChange
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult StatusChange([Bind(Include = "UserId,TicketId,Comment1")] Comment comment)
+        {
+            if (ModelState.IsValid)
+            {
+                var cu = User.Identity.GetUserName();
+                var usrs = db.Users.Single(u => u.UserName == cu);
+                comment.UserId = usrs.Id;
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                //return RedirectToAction("Index");
+                return RedirectToAction("../Tickets/Details/" + comment.TicketId);
+            }
+
+            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", comment.TicketId);
+            //ViewBag.UserId = new SelectList(db.Users, "Id", "Name", comment.UserId);
+            return View(comment);
+        }
 
     }
 }
