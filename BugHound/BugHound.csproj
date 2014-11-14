@@ -220,6 +220,8 @@
     <Compile Include="Models\Notification.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partials\History.cs" />
+    <Compile Include="Models\Partials\Notification.cs" />
     <Compile Include="Models\Priority.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>
@@ -233,6 +235,7 @@
     <Compile Include="Models\Status.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StatusChangeViewModel.cs" />
     <Compile Include="Models\Ticket.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>

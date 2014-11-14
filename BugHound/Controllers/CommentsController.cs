@@ -70,12 +70,27 @@ namespace BugHound.Controllers
             if (ModelState.IsValid )
             {
                 var cu = User.Identity.GetUserName();
-                var usrs = db.Users.Single(u => u.UserName == cu);
-                comment.UserId = usrs.Id;
+                var userId = db.Users.Single(u => u.UserName == cu).Id;
+
+                comment.UserId = userId;
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
-                //return RedirectToAction("Index");
+                
+                //Update Last Updated Field
+                var ct = db.Tickets.Single(id => id.Id == comment.TicketId);
+                ct.LastedUpdated = DateTime.Now;
+                db.Entry(ct).State = EntityState.Modified;
+                db.SaveChanges();
+
+
+                // Create History Event
+                var he = new History(ct.Id, userId, "A comment regarding Ticket Id:" + ct.Id.ToString() + " has been submitted.");
+                
+                db.Histories.Add(he);
+                db.SaveChanges();
+				
+
                 return RedirectToAction("../Tickets/Details/" + comment.TicketId);
             }
 
@@ -155,58 +170,70 @@ namespace BugHound.Controllers
         }
 
         // GET: StatusChange
+        [Authorize(Roles = "Administrator, Project Manager")]
         public ActionResult StatusChange(int? ticketid)
         {
+            var ct = new StatusChangeViewModel();
             if (ticketid == null)
             {
                 ViewBag.tickettitle = "---";
             }
             else
             {
-                var ct = db.Tickets.Single(i => i.Id == ticketid);
-                ViewBag.tickettitle = ct.Title;
+                var tick = db.Tickets.Single(i => i.Id == ticketid);
+                ViewBag.tickettitle = tick.Title;
+                ct.TicketId = ticketid.GetValueOrDefault();
             }
 
             ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
             ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
             ViewBag.SCMessage = "";
 
-            return View();
+            return View(ct);
         }
 
         // POST: Ticketes/StatusChange
         [HttpPost]
+        [Authorize(Roles = "Administrator, Project Manager")]
         [ValidateAntiForgeryToken]
-        public ActionResult StatusChange([Bind(Include = "UserId,TicketId,Comment1")] Comment comment, [Bind(Include = "Id,StatusId")] Ticket status)
+        public ActionResult StatusChange(StatusChangeViewModel statchange)
         {
+            var comment = new Comment();
+                
             if (ModelState.IsValid)
             {
-                if (comment.Comment1 == null)
-                {
-                    ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
-                    ViewBag.SCMessage = "Please comment on the status change.";
-                     
-                    return View(comment);
-                }
                 var cu = User.Identity.GetUserName();
-                var usrs = db.Users.Single(u => u.UserName == cu);
-                comment.UserId = usrs.Id;
+                var usrs = this.db.Users.Single(u => u.UserName == cu).Id;
+
+                comment.UserId = usrs;
+                comment.TicketId = statchange.TicketId;
+                comment.Comment1 = statchange.Comment;
+
 
                 db.Comments.Add(comment);
                 db.SaveChanges();
 
                 var ct = db.Tickets.Single(id => id.Id == comment.TicketId);
-                ct.StatusId = status.StatusId;
+                var oldstat = ct.Status.Name;
+                ct.StatusId = statchange.StatusId;
+                ct.LastedUpdated = DateTime.Now;
                 db.Entry(ct).State = EntityState.Modified;
                 db.SaveChanges();
-                //return RedirectToAction("Index");
+
+                // Create History Event
+                var he = new History(ct.Id, usrs, "Status was changed from \"" + oldstat + "\" to \"" + ct.Status.Name + "\".");
+
+                db.Histories.Add(he);
+                db.SaveChanges();
+
                 return RedirectToAction("../Tickets/Details/" + comment.TicketId);
             }
 
-            //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", comment.TicketId);
-            //ViewBag.UserId = new SelectList(db.Users, "Id", "Name", comment.UserId);
+            var tick = db.Tickets.Single(i => i.Id == statchange.TicketId);
+            ViewBag.tickettitle = tick.Title;
+                
             ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
-            return View(comment);
+            return View(statchange);
         }
 
     }

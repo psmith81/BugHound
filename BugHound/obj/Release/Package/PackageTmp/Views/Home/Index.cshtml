@@ -86,52 +86,57 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-10 col-md-offset-1">
-                                                <table class="table table-bordered table-striped">
-                                                    <tr>
-                                                        <th>
-                                                            Ticket
-                                                        </th>
-                                                        <th>
-                                                            Priortity
-                                                        </th>
-                                                        <th>
-                                                            Project
-                                                        </th>
-                                                    </tr>
-                                                    @foreach (var item in Model)
-                                                    {
-                                                        if (item.Priority.Name == "Critical")
-                                                        {
-                                                            <tr class="danger">
-                                                                <td>
-                                                                    @*@Html.DisplayFor(modelItem => item.Title)*@
-                                                                    @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Priority.Name)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Project.Name)
-                                                                </td>
-                                                            </tr>
-                                                        }
-                                                        else
-                                                        {
+                                            <div class="col-md-10 col-md-offset-1 padded-15">
+                                                <div class="well">
+                                                    <table class="table table-striped table-bordered">
+                                                        <thead>
                                                             <tr>
-                                                                <td>
-                                                                    @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Priority.Name)
-                                                                </td>
-                                                                <td>
-                                                                    @Html.DisplayFor(modelItem => item.Project.Name)
-                                                                </td>
+                                                                <th>
+                                                                    Ticket
+                                                                </th>
+                                                                <th>
+                                                                    Priortity
+                                                                </th>
+                                                                <th>
+                                                                    Project
+                                                                </th>
                                                             </tr>
+                                                        </thead>
+
+                                                        @foreach (var item in Model)
+                                                        {
+                                                            if (item.Priority.Name == "Critical")
+                                                            {
+                                                                <tr class="danger">
+                                                                    <td>
+                                                                        @*@Html.DisplayFor(modelItem => item.Title)*@
+                                                                        @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Project.Name)
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <tr>
+                                                                    <td>
+                                                                        @Html.ActionLink(item.Title, "../Tickets/Details", new { id = item.Id })
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Priority.Name)
+                                                                    </td>
+                                                                    <td>
+                                                                        @Html.DisplayFor(modelItem => item.Project.Name)
+                                                                    </td>
+                                                                </tr>
+                                                            }
                                                         }
-                                                    }
-                                                </table>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     }

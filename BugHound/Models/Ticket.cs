@@ -30,8 +30,8 @@ namespace BugHound.Models
         public int TypeId { get; set; }
         public int StatusId { get; set; }
         public int ProjectId { get; set; }
-        public Nullable<int> AssignedId { get; set; }
-        public Nullable<System.DateTimeOffset> LastedUpdated { get; set; }
+        public int AssignedId { get; set; }
+        public System.DateTimeOffset LastedUpdated { get; set; }
         public string Narration { get; set; }
         public bool Attachments { get; set; }
     

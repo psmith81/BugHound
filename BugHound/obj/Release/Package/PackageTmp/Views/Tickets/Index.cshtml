@@ -51,10 +51,10 @@
             @*@Html.ActionLink(item.Year.Year1.ToString(), "Uncool", new { id = item.Year.ID, filter = "Year" }, new { @class = "text-muted" })*@
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreatedOn)
+            <p id="CreatedOn">@item.CreatedOn.ToString("g")</p>
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastedUpdated)
+            <p id="LastUpDated">@item.LastedUpdated.ToString("g")</p>
         </td>
         <td>
            @if( !string.IsNullOrEmpty(item.Narration)){

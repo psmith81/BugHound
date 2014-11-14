@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BugHound.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
+using PagedList;
 
 
 namespace BugHound.Controllers
@@ -19,26 +20,29 @@ namespace BugHound.Controllers
         private BugHoundSQLEntities db = new BugHoundSQLEntities();
 
         // GET: Tickets
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             //var tickets = db.Tickets.Include(t => t.Priority).Include(t => t.Project).Include(t => t.Status).Include(t => t.Type).Include(t => t.User).Include(t => t.User1);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+
             var cu = User.Identity.GetUserName();
             var usrs = db.Users.Single(u => u.UserName == cu);
             
             var tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id && u.StatusId != 2).OrderByDescending(p => p.PriorityId);
 
-            if (User.IsInRole("Administrator"))
+            if (User.IsInRole("Administrator"))  // Returns all tickets
             {
                  tickets = db.Tickets.OrderByDescending(p => p.PriorityId);
-                return View(tickets.ToList());
+                return View(tickets.ToPagedList(pageNumber, pageSize));
             }
-            if (User.IsInRole("Project Manager"))
+            if (User.IsInRole("Project Manager")) // Returns Tickets owned user and all tickets where user is the PM.
             {
-                tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id || u.ProjectId == usrs.Id).OrderByDescending(p => p.PriorityId);
-                return View(tickets.ToList());
+                tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id || u.Project.ManagerId == usrs.Id).OrderByDescending(p => p.PriorityId);
+                return View(tickets.ToPagedList(pageNumber, pageSize));
             }
 
-            return View(tickets.ToList());
+            return View(tickets.ToPagedList(pageNumber, pageSize));  // Returns tickets assigned to user.
         }
 
         // GET: Tickets/Details/5
@@ -89,6 +93,21 @@ namespace BugHound.Controllers
                 ticket.LastedUpdated = DateTime.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
+
+                // Create History Event
+                var eventstr =  "Ticket Id:" + ticket.Id.ToString() + " was submitted.";
+                var he = new History(ticket.Id, usrs.Id, eventstr);
+                db.Histories.Add(he);
+                db.SaveChanges();
+
+                var ne = new Notification(ticket.Id, ticket.AssignedId, eventstr);
+                db.Notifications.Add(ne);
+                db.SaveChanges();
+
+                var nep = new Notification(ticket.Id, ticket.User1.Id, eventstr);
+                db.Notifications.Add(nep);
+                db.SaveChanges();
+
                 return RedirectToAction("Details/" + ticket.Id);
             }
 
@@ -179,26 +198,28 @@ namespace BugHound.Controllers
             base.Dispose(disposing);
         }
 
-        //// GET: Attachements/Create
-        //public ActionResult AttachCreate(int? ticketid)
-        //{
-        //    if (ticketid == null)
-        //    {
-        //        ViewBag.tickettitle = "---";
-        //    }
-        //    else
-        //    {
-        //        var ct = db.Tickets.Single(i => i.Id == ticketid);
-        //        ViewBag.tickettitle = ct.Title;
-        //    }
-        //    ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
-        //    return View();
-        //}
+        // GET: Attachements/Create
+        [Authorize(Roles = "Administrator, Project Manager, Developer, Support")]
+        public ActionResult AttachCreate(int? ticketid)
+        {
+            if (ticketid == null)
+            {
+                ViewBag.tickettitle = "---";
+            }
+            else
+            {
+                var ct = db.Tickets.Single(i => i.Id == ticketid);
+                ViewBag.tickettitle = ct.Title;
+            }
+            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
+            return View();
+        }
 
         // POST: Attachements/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrator, Project Manager, Developer, Support")]
         [ValidateAntiForgeryToken]
         public ActionResult AttachCreate(AttachmentViewModel attachmentVm)
         {
@@ -208,10 +229,10 @@ namespace BugHound.Controllers
                 if (attachmentVm.FileObj != null && attachmentVm.FileObj.ContentLength > 0)
                 {
                     var cu = User.Identity.GetUserName();
-                    var usr = db.Users.Single(u => u.UserName == cu);
+                    var usr = db.Users.Single(u => u.UserName == cu).Id;
                     var attachment = new Attachement()
                     {
-                        UserId = usr.Id,
+                        UserId = usr,
                         DateAttached = DateTime.Now,
                         FileUNQName = Guid.NewGuid().ToString() + attachmentVm.FileObj.FileName,
                         Description = attachmentVm.Description,
@@ -233,6 +254,20 @@ namespace BugHound.Controllers
 
                     db.Attachements.Add(attachment);
                     db.SaveChanges();
+
+                    //Update Last Updated Field
+                    var ct = db.Tickets.Single(id => id.Id == attachmentVm.TicketId);
+                    ct.LastedUpdated = DateTime.Now;
+                    db.Entry(ct).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    // Create History Event
+                    var he = new History(ct.Id, usr, 
+                        "Attachment, ID No." + attachment.Id.ToString() + ", made associated with Ticket No." + attachmentVm.TicketId +"");
+                    
+                    db.Histories.Add(he);
+                    db.SaveChanges();
+
                     return RedirectToAction("Index");
                 }
                 //ViewBag.TicketId = new SelectList(db.Tickets, "Id", "Title", attachment.TicketId);
