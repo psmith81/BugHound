@@ -84,6 +84,7 @@ namespace BugHound.Controllers
                         UpLoaded = true
                     };
 
+
                     var path = HttpContext.Server.MapPath("~/Repository/Attachments/" + attachmentVm.TicketId + "/");
                     var fullPath = Path.Combine(path, attachment.FileUNQName);
 
@@ -96,6 +97,11 @@ namespace BugHound.Controllers
                     attachmentVm.FileObj.SaveAs(fullPath);
 
                     db.Attachements.Add(attachment);
+
+                    var tick = db.Tickets.Single(i => i.Id == attachmentVm.TicketId);
+                    tick.Attachments = true;
+                    tick.LastedUpdated = DateTime.Now;
+                    db.Entry(tick).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }

@@ -125,6 +125,7 @@ namespace BugHound.Controllers
         }
 
         // GET: Tickets/Edit/5
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -149,6 +150,7 @@ namespace BugHound.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,EnteredById,CreatedOn,PriorityId,Title,TypeId,StatusId,ProjectId,AssignedId,LastedUpdated,Narration,Attachments")] Ticket ticket)
         {
@@ -261,16 +263,28 @@ namespace BugHound.Controllers
 
                     //Update Last Updated Field
                     var ct = db.Tickets.Single(id => id.Id == attachmentVm.TicketId);
+                    ct.Attachments = true;
                     ct.LastedUpdated = DateTime.Now;
                     db.Entry(ct).State = EntityState.Modified;
                     db.SaveChanges();
 
                     // Create History Event
-                    var he = new History(ct.Id, usr, 
-                        "Attachment, ID No." + attachment.Id.ToString() + ", made associated with Ticket No." + attachmentVm.TicketId +"");
-                    
+                    var eventstr = "Attachment, ID No." + attachment.Id.ToString() + ", made associated with Ticket No." + attachmentVm.TicketId +"";
+                    var he = new History(ct.Id, usr, eventstr);
                     db.Histories.Add(he);
                     db.SaveChanges();
+
+                    // Notify Assignee 
+                    var ne = new Notification(ct.Id, ct.AssignedId, eventstr);
+                    db.Notifications.Add(ne);
+                    db.SaveChanges();
+                    // Notify Project Manager if not assignee
+                    var nep = new Notification(ct.Id, ct.User1.Id, eventstr);
+                    if (ne.UserId != nep.UserId)
+                    {
+                        db.Notifications.Add(nep);
+                        db.SaveChanges();
+                    }
 
                     return RedirectToAction("Index");
                 }
@@ -299,5 +313,83 @@ namespace BugHound.Controllers
             //Response.AppendHeader("Content-Disposition", cd.ToString());
             return File(FileName, "file", document.FileName );
         }
+
+        // Get: Priority Change
+        [Authorize(Roles = "Administrator")]
+        public ActionResult PriorityChange(int? ticketid)
+        {
+            var ct = new PriorityChangeViewModel();
+            if (ticketid == null)
+            {
+                ViewBag.tickettitle = "---";
+            }
+            else
+            {
+                var tick = db.Tickets.Single(i => i.Id == ticketid);
+                ViewBag.tickettitle = tick.Title;
+                ct.TicketId = ticketid.GetValueOrDefault();
+            }
+            ViewBag.PriorityId = new SelectList(db.Priorities.OrderBy(so => so.SortOrder), "Id", "Name");
+            ViewBag.PreviousPage = Request.UrlReferrer.AbsolutePath.ToString();
+            ViewBag.SCMessage = "";
+
+            return View(ct);
+        }
+
+        // POST: Priority Change
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult PriorityChange(PriorityChangeViewModel prichange)
+        {
+            var comment = new Comment();
+                
+            if (ModelState.IsValid)
+            {
+                var cu = User.Identity.GetUserName();
+                var usrs = this.db.Users.Single(u => u.UserName == cu).Id;
+
+                comment.UserId = usrs;
+                comment.TicketId = prichange.TicketId;
+                comment.Comment1 = prichange.Comment;
+
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+
+                var ct = db.Tickets.Single(id => id.Id == comment.TicketId);
+                var oldstat = ct.Priority.Name;
+                ct.PriorityId = prichange.PriorityId;
+                ct.LastedUpdated = DateTime.Now;
+                db.Entry(ct).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // Create History Event
+                var eventstr = "Priority on Ticket: " + ct.Title + " has changed from \"" + oldstat + "\" to \"" + ct.Priority.Name + "\".";
+                var he = new History(ct.Id, usrs, eventstr);
+                db.Histories.Add(he);
+                db.SaveChanges();
+
+                // Notify Assignee 
+                var ne = new Notification(ct.Id, ct.AssignedId, eventstr);
+                db.Notifications.Add(ne);
+                db.SaveChanges();
+                // Notify Project Manager if not assignee
+                var nep = new Notification(ct.Id, ct.User1.Id, eventstr);
+                if (ne.UserId != nep.UserId)
+                {
+                    db.Notifications.Add(nep);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("../Tickets/Details/" + comment.TicketId);
+            }
+
+            var tick = db.Tickets.Single(i => i.Id == prichange.TicketId);
+            ViewBag.tickettitle = tick.Title;
+                
+            ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
+            return View(prichange);
+        }
+
     }
 }

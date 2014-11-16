@@ -163,6 +163,14 @@
                                     }
                                 </div>
                             </div>
+                            <div class="col-md-3">
+                                <div class="btn-group-justified">
+                                    @if (User.IsInRole("Administrator"))
+                                    {
+                                        @Html.ActionLink("Change Priority", "PriorityChange", "Tickets", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                    }
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

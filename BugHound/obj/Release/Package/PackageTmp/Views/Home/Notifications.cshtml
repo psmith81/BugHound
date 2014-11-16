@@ -18,15 +18,16 @@
                     <p>Notifications</p>
                 </div>
 
-                <div class="ui-widget-content">
+                <div class="ui-widget-content ">
                     <div class="padd">
 
-                        <table class="table">
+                        <table class="table table-condensed" style="font-size:small">
                             <tr>
                                 <th>Acknowledge</th>
                                 <th>Notice</th>
                                 <th>Sent</th>
                             </tr>
+                            
                             @foreach (var item in Model)
                             {
                                 <tr>
@@ -38,10 +39,11 @@
                                         @Html.DisplayFor(mi => item.Notification1)
                                     </td>
                                     <td>
-                                        <p> @item.SentAt.ToString("g")</p>
+                                        <p> @item.SentAt.DateTime.ToString("g")</p>
                                     </td>
                                 </tr>
                             }
+                                
                         </table>
 
                         <div class="row">

@@ -227,6 +227,7 @@
     <Compile Include="Models\Priority.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PriorityChangeViewModel.cs" />
     <Compile Include="Models\Project.cs">
       <DependentUpon>BugHoundEnitites.tt</DependentUpon>
     </Compile>
@@ -606,6 +607,7 @@
     <Content Include="Views\Comments\StatusChange.cshtml" />
     <Content Include="Views\Shared\NotifyPartial.cshtml" />
     <Content Include="Views\Home\Notifications.cshtml" />
+    <Content Include="Views\Tickets\PriorityChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -221,10 +221,24 @@ namespace BugHound.Controllers
                 db.SaveChanges();
 
                 // Create History Event
-                var he = new History(ct.Id, usrs, "Status was changed from \"" + oldstat + "\" to \"" + ct.Status.Name + "\".");
+                var eventstr = "Status was changed from \"" + oldstat + "\" to \"" + ct.Status.Name + "\".";
+                var he = new History(ct.Id, usrs, eventstr);
 
                 db.Histories.Add(he);
                 db.SaveChanges();
+
+
+                // Notify Assignee 
+                var ne = new Notification(ct.Id, ct.AssignedId, eventstr);
+                db.Notifications.Add(ne);
+                db.SaveChanges();
+                // Notify Project Manager if not assignee
+                var nep = new Notification(ct.Id, ct.User1.Id, eventstr);
+                if (ne.UserId != nep.UserId)
+                {
+                    db.Notifications.Add(nep);
+                    db.SaveChanges();
+                }
 
                 return RedirectToAction("../Tickets/Details/" + comment.TicketId);
             }
