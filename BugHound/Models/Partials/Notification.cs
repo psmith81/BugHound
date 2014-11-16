@@ -17,7 +17,7 @@ namespace BugHound.Models
     {
         public Notification()
         {
-            this.SentAt = DateTime.UtcNow;
+            this.SentAt = DateTime.Now;
             this.Recieved = false;
         }
 

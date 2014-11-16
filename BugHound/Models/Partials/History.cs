@@ -9,7 +9,7 @@ namespace BugHound.Models
     {
         public History()
         {
-            this.Occured = DateTime.UtcNow;
+            this.Occured = DateTime.Now;
         }
 
         public History(int TicketId, int UserId, string Event) : this()

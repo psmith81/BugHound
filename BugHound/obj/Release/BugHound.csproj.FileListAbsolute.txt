@@ -116,3 +116,4 @@ C:\GitHub\BugHound\BugHound\bin\Microsoft.AspNet.Identity.Owin.xml
 C:\GitHub\BugHound\BugHound\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 C:\GitHub\BugHound\BugHound\obj\Release\BugHound.dll
 C:\GitHub\BugHound\BugHound\obj\Release\BugHound.pdb
+C:\GitHub\BugHound\BugHound\obj\Release\BugHound.csprojResolveAssemblyReference.cache

@@ -6,7 +6,9 @@
         <h2>Bug Ticket: <span class="fieldcolor-italic"> @Html.DisplayFor(model => model.Title) </span></h2>
     </div>
 </div>
+<!-- Top Info. Row -->
 <div class="row">
+    <!-- Priority -->
     <div class="col-md-2">
         @*<h4>Ticket No. @Html.DisplayFor(model => model.Id)</h4>*@
         @if (Model.Priority.Name == "Critical")
@@ -26,6 +28,7 @@
             <h3>Priority: <span class="label label-default">Low</span></h3>
         }
     </div>
+    <!-- Status -->
     <div class="col-md-2">
         @if (Model.Status.Name == "Open")
         {
@@ -41,8 +44,9 @@
         }
 
     </div>
+    <!-- Project Name -->
     <div class="col-md-3">
-        <h3>Part of the <span class="fieldcolor"> @Html.DisplayFor(model => model.Project.Name) </span> project.</h3>
+        <h3>Project: <span class="fieldcolor"> @Html.DisplayFor(model => model.Project.Name) </span></h3>
     </div>
     <div class="col-md-5">
         <h3>Reported as:<span class="fieldcolor"> @Html.DisplayFor(model => model.Type.Name)</span></h3>
@@ -105,6 +109,11 @@
                 <div id="pane1" class="tab-pane active">
                     <div class="well">
                         <div class="row">
+                            <div class="col-md-11 col-md-offset-1">
+                                <span class="label label-warning"><i class="fa fa-info"></i></span> Dwell over Comment to see full text.
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="span3">
                                     <div style="height:300px; overflow:auto">
@@ -141,15 +150,18 @@
                         </div>
                         <div class="row"><br /></div>
                         <div class="row">
-                            <div class="col-md-5 col-md-offset-1">
+                            <div class="col-md-3 col-md-offset-1">
                                 <div class="btn-group-justified">
                                     @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="btn-group-justified">
                                     @if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
                                     {
                                         @Html.ActionLink("Change Status", "StatusChange", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
                                     }
                                 </div>
-
                             </div>
                         </div>
                     </div>

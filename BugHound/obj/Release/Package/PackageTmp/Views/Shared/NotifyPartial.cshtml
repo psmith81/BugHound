@@ -1,0 +1,13 @@
+﻿@model IEnumerable<BugHound.Models.Notification>
+@*@using Microsoft.AspNet.Identity*@
+
+    @if (@ViewBag.NoticeCount != " 0 Notices")
+    {
+        <ul class="nav navbar-btn bg-warning">
+            <li>
+                @*<i class="fa fa-flag"></i>*@
+                @Html.ActionLink((string)ViewBag.Noticecount, "Notifications", "Home", htmlAttributes: new { @class = "fa fa-flag" })
+            </li>
+        </ul>
+
+    }

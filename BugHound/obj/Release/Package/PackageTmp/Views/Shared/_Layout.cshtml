@@ -11,7 +11,7 @@
 
     <title>@ViewBag.Title - BugHound</title>
     @*@Styles.Render("~/Content/css")*@
-    
+
     <!-- Stylesheets -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
     <!-- Font awesome icon -->
@@ -49,7 +49,7 @@
 </head>
 <body>
 
-    <!-- Matter 
+    <!-- Matter
 
     <div class="matter">
         <div class="container">
@@ -67,10 +67,10 @@
                         </div>
                         <div class="widget-content">
                             <div class="padd">
-                                <!-- Content goes here 
+                                <!-- Content goes here
                             </div>
                             <div class="widget-foot">
-                                <!-- Footer goes here 
+                                <!-- Footer goes here
                             </div>
                         </div>
                     </div>
@@ -81,21 +81,18 @@
     </div>
 
     <!-- Matter ends -->
-
     <!-- Page heading -->
+    @*<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">*@
     <div class="page-head">
         <!-- My Orginal Nav -->
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    
-                    @*<img src="~/img/BugHound.png" height="49" />
-                    @Html.ActionLink("BugHound", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                        <div >
-                            <a title="BugHound Home" class="" href="~/Home/Index" target="_blank">
-                                <img src="~/img/BugHound.png" style="border: 0; float: left; margin-right: 15px; height:49px" />
-                            </a>
-                        </div>
+                    <div>
+                        <a title="BugHound Home" class="" href="~/Home/Index" target="_blank">
+                            <img src="~/img/BugHound.png" style="border: 0; float: left; margin-right: 15px; height:49px" />
+                        </a>
+                    </div>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -115,7 +112,13 @@
                             }
                         }
                     </ul>
-                    @Html.Partial("_LoginPartial")
+                    <div class="nav pull-right">
+                        <ul class="nav">
+                            <li class="navbar-left">@Html.Action("NotifyPartial","Home")</li>
+                            <li class="navbar-right">@Html.Partial("_LoginPartial")</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </div>

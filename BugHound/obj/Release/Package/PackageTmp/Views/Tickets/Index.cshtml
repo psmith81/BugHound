@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BugHound.Models.Ticket>
+﻿@model PagedList.PagedList<BugHound.Models.Ticket>
+@using PagedList.Mvc;
 
 <h2>Tickets</h2>
 
@@ -8,16 +9,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            Title
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CreatedOn)
+            Created On
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastedUpdated)
+            Last Updated
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Narration)
+            Narration
         </th>
         <th>
             Priority
@@ -38,7 +39,7 @@
             Entered By
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Attachments)
+            Attachments
         </th>
         <th></th>
     </tr>
@@ -54,7 +55,7 @@
             <p id="CreatedOn">@item.CreatedOn.ToString("g")</p>
         </td>
         <td>
-            <p id="LastUpDated">@item.LastedUpdated.ToString("g")</p>
+            <p id="LastUpDated">@item.LastedUpdated</p>
         </td>
         <td>
            @if( !string.IsNullOrEmpty(item.Narration)){
@@ -93,4 +94,5 @@
 }
 
 </table>
- 
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

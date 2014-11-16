@@ -81,5 +81,73 @@ namespace BugHound.Controllers
         {
             return PartialView();
         }
+        
+        // Get: Notification
+        [AllowAnonymous]
+        public ActionResult NotifyPartial()
+        {
+            var cui = User.Identity.GetUserName();
+            var notices = new NotificationViewModel();
+            var nc = 0;
+
+            if (cui != "")
+            {
+                var cu = db.Users.Single(u => u.UserName == cui);
+                var dbrst = db.Notifications.Where(u => u.UserId == cu.Id && u.Recieved == false);
+
+                nc = dbrst.Count();
+                if (nc == 1)
+                {
+                    ViewBag.NoticeCount = " " + nc.ToString() + " Notice";
+                }
+                else
+                {
+                    ViewBag.NoticeCount = " " + nc.ToString() + " Notices";
+                }
+
+                return PartialView();
+            }
+            else
+            {
+                ViewBag.NoticeCount = " 0 Notices";
+                return PartialView();
+            }
+        }
+
+        //// POST: Notification
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public ActionResult NotifyPartial(NotificationViewModel notices)
+        //{
+        //    return PartialView();
+        //}
+
+        // Get: Notifications
+        public ActionResult Notifications(int? Id)
+        {
+            var cui = User.Identity.GetUserName();
+            var cu = db.Users.Single(u => u.UserName == cui);
+            if (Id != null)
+            {
+                var acknote = db.Notifications.Single(i => i.Id == Id);
+                acknote.Recieved = true;
+                db.Entry(acknote).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            var dbrst = db.Notifications.Where(u => u.UserId == cu.Id && u.Recieved == false);
+            var nc = dbrst.Count();
+            if (nc == 0)
+            {
+                return Redirect("/");
+            }
+            return PartialView(dbrst);
+        }
+
+        //[HttpGet]
+        //public ActionResult Notificaions(Notification notice)
+        //{
+        //    return View(notice);
+        //}
     }
 }

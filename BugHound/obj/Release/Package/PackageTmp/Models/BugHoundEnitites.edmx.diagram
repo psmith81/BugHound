@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="BugHoundModel.Ticket" Width="1.5" PointX="8.25" PointY="15.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BugHoundModel.Type" Width="1.5" PointX="6" PointY="22.875" IsExpanded="true" />
         <EntityTypeShape EntityType="BugHoundModel.User" Width="1.5" PointX="0.75" PointY="10.375" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="BugHoundModel.FK_Attachements_Tickets" />
+        <AssociationConnector Association="BugHoundModel.FK_Attachements_Tickets" ManuallyRouted="false" />
         <AssociationConnector Association="BugHoundModel.FK_Attachements_Users" ManuallyRouted="false" />
         <AssociationConnector Association="BugHoundModel.FK_TicketComments_Tickets" ManuallyRouted="false" />
         <AssociationConnector Association="BugHoundModel.FK_TicketComments_Users" ManuallyRouted="false" />

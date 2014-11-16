@@ -149,8 +149,8 @@
     <Property Name="Active" Type="Boolean" Nullable="false" />
   </EntityType>
   <Association Name="FK_Attachements_Tickets">
-    <End Type="Self.Ticket" Multiplicity="1" Role="Tickets" />
-    <End Type="Self.Attachement" Multiplicity="*" Role="Attachements" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="1" />
+    <End Role="Attachements" Type="Self.Attachement" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Tickets">
         <PropertyRef Name="Id" />
@@ -377,8 +377,8 @@
     <EntitySet Name="Types" EntityType="Self.Type" />
     <EntitySet Name="Users" EntityType="Self.User" />
     <AssociationSet Name="FK_Attachements_Tickets" Association="Self.FK_Attachements_Tickets">
-      <End EntitySet="Tickets" Role="Tickets" />
-      <End EntitySet="Attachements" Role="Attachements" />
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="Attachements" EntitySet="Attachements" />
     </AssociationSet>
     <AssociationSet Name="FK_Attachements_Users" Association="Self.FK_Attachements_Users">
       <End Role="Users" EntitySet="Users" />

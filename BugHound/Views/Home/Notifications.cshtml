@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BugHound.Models.Notification>
+
+<!-- Stylesheets -->
+<link href="~/Content/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="~/Content/font-awesome.min.css">
+<link href="~/Content/style.css" rel="stylesheet">
+
+
+@Html.AntiForgeryToken()
+
+<div style="width:60%; max-width:700px; margin:50px auto">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Widget starts -->
+            <div class="widget worange">
+                <!-- Widget head -->
+                <div class="widget-head">
+                    <p>Notifications</p>
+                </div>
+
+                <div class="ui-widget-content">
+                    <div class="padd">
+
+                        <table class="table">
+                            <tr>
+                                <th>Acknowledge</th>
+                                <th>Notice</th>
+                                <th>Sent</th>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    @Html.HiddenFor(mi => item.Id)
+                                    <td>
+                                        @Html.ActionLink("Acknowledge", "Notifications", new { id = item.Id }, new { @class = "btn  btn-primary btn-sm" })
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(mi => item.Notification1)
+                                    </td>
+                                    <td>
+                                        <p> @item.SentAt.DateTime.ToString("g")</p>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <ul class="form-horizontal pager pull-left">
+                                    <li class="previouse">@Html.ActionLink("Return", "Index", "Home")</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -3,7 +3,7 @@
 <br />
 <div class="row">
     <div class="col-md-12">
-        <h2>Bug Ticket: <u> @Html.DisplayFor(model => model.Title) </u></h2>
+        <h2>Bug Ticket: <span class="fieldcolor-italic"> @Html.DisplayFor(model => model.Title) </span></h2>
     </div>
 </div>
 <div class="row">
@@ -42,94 +42,41 @@
 
     </div>
     <div class="col-md-3">
-        <h3>Part of the <u> @Html.DisplayFor(model => model.Project.Name) </u> project.</h3>
+        <h3>Part of the <span class="fieldcolor"> @Html.DisplayFor(model => model.Project.Name) </span> project.</h3>
     </div>
     <div class="col-md-5">
-        <h3>Reported as:<u> @Html.DisplayFor(model => model.Type.Name)</u></h3>
+        <h3>Reported as:<span class="fieldcolor"> @Html.DisplayFor(model => model.Type.Name)</span></h3>
     </div>
 </div>
 <div class="row"><hr /><br /></div>
 <div class="row">
     <div class="col-md-5">
+        <div class="row">
+            <div class="col-md-3">
+                <label class="pull-right">Narration</label>
+            </div>
+            <div class="col-md-9">
+                <div >
+                    @Html.DisplayFor(model => model.Narration)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="col-md-5">
         <dl class="dl-horizontal">
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.CreatedOn)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CreatedOn)
-                </dd>*@
-
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.Title)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
-                </dd>*@
-
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.LastedUpdated)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.LastedUpdated)
-                </dd>*@
 
             <dt>
                 @Html.DisplayNameFor(model => model.Narration)
             </dt>
 
             <dd>
-                @Html.DisplayFor(model => model.Narration)
+                <div class="wide-400">
+                    @Html.DisplayFor(model => model.Narration)
+                </div>
             </dd>
 
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.Attachments)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Attachments)
-                </dd>*@
-
-            @*<dt>
-
-                    Priority
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Priority.Name)
-                </dd>*@
-
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.Project.Name)
-                    Project
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Project.Name)
-                </dd>*@
-
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.Status.Name)
-                    Status
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Status.Name)
-                </dd>*@
-
-            @*<dt>
-                    @Html.DisplayNameFor(model => model.Type.Name)
-                    Type
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Type.Name)
-                </dd>*@
-
             <dt>
-                @*@Html.DisplayNameFor(model => model.User.Name)*@
                 Assigned To
             </dt>
 
@@ -138,7 +85,6 @@
             </dd>
 
             <dt>
-                @*@Html.DisplayNameFor(model => model.User1.Name)*@
                 Entered By
             </dt>
 
@@ -147,7 +93,7 @@
             </dd>
 
         </dl>
-    </div>
+    </div>*@
     <div class="col-md-7">
         <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -176,7 +122,6 @@
                                                 <tr>
                                                     <td>
                                                         <a id="popover-@item.Id" class="btn" href="" data-content="@item.Comment1" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
-
                                                             @if (!string.IsNullOrEmpty(item.Comment1))
                                                             {
                                                                 @item.Comment1.Substring(0, Math.Min(item.Comment1.Length, 70))
@@ -199,8 +144,12 @@
                             <div class="col-md-5 col-md-offset-1">
                                 <div class="btn-group-justified">
                                     @Html.ActionLink("New Comment", "Create", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
-                                    @Html.ActionLink("Change Status", "StatusChange", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                    @if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
+                                    {
+                                        @Html.ActionLink("Change Status", "StatusChange", "Comments", new { ticketid = Model.Id }, htmlAttributes: new { @class = "btn  btn-default btn-md" })
+                                    }
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -259,6 +208,36 @@
                 <div id="pane3" class="tab-pane">
                     <div class="well">
                         <div class="row">
+                            <div class="col-md-12">
+                                <div class="span3">
+                                    <table class="table table-bordered table-striped">
+                                        <tr>
+                                            <th>Event</th>
+                                            <th>Occurred</th>
+                                            <th>User</th>
+                                        </tr>
+                                        @foreach (var item in Model.Histories)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a id="popover-@item.Id" class="btn" href="" data-content="@item.Event" rel="popover" data-placement="bottom" data-original-title="Full Comment:">
+                                                        @if (!string.IsNullOrEmpty(item.Event))
+                                                        {
+                                                            @item.Event.Substring(0, Math.Min(item.Event.Length, 70))
+                                                        }
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    @item.Occured.ToString("g")
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.User.Name)
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                </div>
+                            </div>
                             <p>History</p>
                         </div>
                     </div>

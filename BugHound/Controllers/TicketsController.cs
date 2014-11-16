@@ -100,14 +100,18 @@ namespace BugHound.Controllers
                 db.Histories.Add(he);
                 db.SaveChanges();
 
+                // Notify Assignee 
                 var ne = new Notification(ticket.Id, ticket.AssignedId, eventstr);
                 db.Notifications.Add(ne);
                 db.SaveChanges();
-
+                // Notify Project Manager if not assignee
                 var nep = new Notification(ticket.Id, ticket.User1.Id, eventstr);
-                db.Notifications.Add(nep);
-                db.SaveChanges();
-
+                if (ne.UserId != nep.UserId)
+                {
+                    db.Notifications.Add(nep);
+                    db.SaveChanges();
+                }
+                
                 return RedirectToAction("Details/" + ticket.Id);
             }
 
