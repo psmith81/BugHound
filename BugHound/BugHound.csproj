@@ -608,6 +608,7 @@
     <Content Include="Views\Shared\NotifyPartial.cshtml" />
     <Content Include="Views\Home\Notifications.cshtml" />
     <Content Include="Views\Tickets\PriorityChange.cshtml" />
+    <Content Include="Views\Account\UserEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

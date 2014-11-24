@@ -67,8 +67,10 @@
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Home", "Index", "Home")</li>
                             <li>@Html.ActionLink("About", "About", "Home")</li>
+
                             @if (User.Identity.IsAuthenticated)
                             {
+                                <!-- Administrator -->
                                 if (User.IsInRole("Administrator"))
                                 {
                                     @*<li class="dropdown  dropdown-big">
@@ -77,25 +79,61 @@
                                                 <li>@Html.ActionLink("Users", "Index", "Users")</li>
                                             </ul>
                                         </li>*@
-                                    <li class="dropdown dropdown-big">
+                                    <li class="dropdown dropdown-header">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administration</a>
                                         <!-- Dropdown -->
                                         <ul class="dropdown-menu">
-                                            <li>
-                                                @Html.ActionLink("Users", "Index", "Users", htmlAttributes: new { @class = "fa fa-comment" })
-                                                @*<p><span class="label label-info"><i class="fa fa-cloud"></i></span> Syncing Members Lists to Server</p>*@
-                                                <hr />
-
-                                                <hr />
-                                                <!-- Dropdown menu footer -->
-                                                <div class="drop-foot">
-                                                    @*<a href="#">View All</a>*@
-                                                </div>
+                                            <li role="presentation">
+                                                <label class="label label-info"><i class="fa fa-users"></i> Users</label>
                                             </li>
-
+                                            <li role="presentation">
+                                                @Html.ActionLink("List Users", "Index", "Users", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                            </li>
+                                            <li role="presentation">
+                                                @Html.ActionLink("Register New User", "Register", "Account", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                            </li>
+                                            <li role="presentation">
+                                                <hr />
+                                                <label class="label label-info"><i class="fa fa-cog"></i> Roles</label>
+                                            </li>
+                                            <li role="presentation">
+                                                @Html.ActionLink("List Roles", "ListRoles", "Account", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                            </li>
                                         </ul>
                                     </li>
                                 }
+                                if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
+                                {
+                                    <li class="dropdown dropdown-header">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects</a>
+                                        <ul class="dropdown-menu">
+                                            <li role="presentation">
+                                                <label class="label label-info"><i class="fa fa-cog"></i> Projects</label>
+                                            </li>
+                                            <li role="presentation">
+                                                @Html.ActionLink("List Projects", "Index", "Projects", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                            </li>
+                                            <li role="presentation">
+                                                @Html.ActionLink("Add New Project", "Create", "Projects", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+                                <li class="dropdown dropdown-header">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tickets</a>
+                                    <ul class="dropdown-menu">
+                                        <li role="presentation">
+                                            <label class="label label-info"><i class="fa fa-tag"></i> Tickets</label>
+                                        </li>
+                                        <li role="presentation">
+                                            @Html.ActionLink("List My Tickets", "Index", "Tickets", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                        </li>
+                                        <li role="presentation">
+                                            @Html.ActionLink("Add New Ticket", "Create", "Tickets", routeValues: null, htmlAttributes: new { @role = "menuitem" })
+                                        </li>
+                                    </ul>
+                                </li>
+
                             }
                         </ul>
                         <div class="nav pull-right">

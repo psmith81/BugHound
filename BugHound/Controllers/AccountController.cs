@@ -113,6 +113,28 @@ namespace BugHound.Controllers
             return View(model);
         }
 
+        //// pbs:
+        //// GET: /UserEdit
+        //public ActionResult UserEdit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //        //return RedirectToAction("../Home");
+        //    }
+        //    User user = db.Users.Find(id);
+        //    //var usrs = db.Users.Single(u => u.UserName == cu);
+        //    RegisterViewModel sysuser = new RegisterViewModel();
+        //    sysuser.Name = user.Name;
+        //    var umuser = UserManager. (user.Name);
+        //    ViewBag.CurrentRole = "Bug";
+            
+        //    ViewBag.RoleName = new SelectList(UserManager.GetAllRoles(), "Name", "Name");
+        //    ViewBag.SupervisorId = new SelectList(db.Users.Where(u => u.Active), "Id", "Name");
+
+        //    return View(sysuser);
+        //}
+
         //
         // GET: /Account/UnassignUserRole
         [Authorize(Roles = "Administrator")]
@@ -318,6 +340,10 @@ namespace BugHound.Controllers
                     db.Users.Add(bhuser);
                     db.SaveChanges();
                     var role = new RegisterViewModel { RoleName = model.RoleName };
+                    // pbs: Remove from current roles before adding to new role
+                    if (UserManager.IsInRole(user.Id, "Project Manager")) { UserManager.RemoveFromRole(user.Id, "Project Manager"); }
+
+                    // end pbs block
                     UserManager.AddToRole(user.Id, role.RoleName);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

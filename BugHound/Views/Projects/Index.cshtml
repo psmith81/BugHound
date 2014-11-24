@@ -19,6 +19,7 @@
 
 @foreach (var item in Model) {
     <tr>
+        @Html.HiddenFor(modelItem => item.Id)
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
@@ -26,6 +27,8 @@
             @Html.DisplayFor(modelItem => item.User.Name)
         </td>
         <td>
+            @Html.ActionLink("Tickets", "Index", "Tickets", new { projid=item.Id }, null )|
+        
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) 
             @if (User.IsInRole("Administrator")) 
             {

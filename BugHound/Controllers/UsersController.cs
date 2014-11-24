@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using PagedList.Mvc;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace BugHound.Models
 {
@@ -75,12 +77,14 @@ namespace BugHound.Models
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             User user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.SupervisorId = new SelectList(db.Users, "Id", "Name", user.SupervisorId);
+            ViewBag.SupervisorId = new SelectList(db.Users.Where(a => a.Active == true), "Id", "Name", user.SupervisorId);
+            
             return View(user);
         }
 

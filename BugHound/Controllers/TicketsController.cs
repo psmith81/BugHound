@@ -10,6 +10,7 @@ using BugHound.Models;
 using Microsoft.AspNet.Identity;
 using System.IO;
 using PagedList;
+using System.Web.Security;
 
 
 namespace BugHound.Controllers
@@ -18,31 +19,131 @@ namespace BugHound.Controllers
     public class TicketsController : Controller
     {
         private BugHoundSQLEntities db = new BugHoundSQLEntities();
+        private static bool SortDirection;
+        private static string SortProperty;
+        private static string lastfilter;
+        private static IEnumerable<Ticket> ticks; //static model for compund filtering 
 
+        
         // GET: Tickets
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, int? id, string filter, string searchTerm )
         {
-            //var tickets = db.Tickets.Include(t => t.Priority).Include(t => t.Project).Include(t => t.Status).Include(t => t.Type).Include(t => t.User).Include(t => t.User1);
             int pageSize = 10;
+            if (page != null && filter == null)
+            {
+                filter = lastfilter;
+            }
+            else
+            {
+                lastfilter = filter;
+            }
             int pageNumber = (page ?? 1);
 
             var cu = User.Identity.GetUserName();
             var usrs = db.Users.Single(u => u.UserName == cu);
-            
-            var tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id && u.StatusId != 2).OrderByDescending(p => p.PriorityId);
+            var urole = "";
 
-            if (User.IsInRole("Administrator"))  // Returns all tickets
+            if (User.IsInRole("Support")) { urole = "Support"; }
+            if (User.IsInRole("Developer")) { urole = "Developer"; }
+            if (User.IsInRole("Project Manager")) { urole = "Project Manager"; }
+            if (User.IsInRole("Administrator")) { urole = "Administrator"; }
+
+            //var tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id && u.StatusId != 2).OrderByDescending(p => p.PriorityId);
+            var tickets = db.Tickets.OrderByDescending(p => p.PriorityId);
+
+            if (searchTerm != null)
             {
-                 tickets = db.Tickets.OrderByDescending(p => p.PriorityId);
-                return View(tickets.ToPagedList(pageNumber, pageSize));
-            }
-            if (User.IsInRole("Project Manager")) // Returns Tickets owned user and all tickets where user is the PM.
-            {
-                tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id || u.Project.ManagerId == usrs.Id).OrderByDescending(p => p.PriorityId);
-                return View(tickets.ToPagedList(pageNumber, pageSize));
+                tickets = db.Tickets.Where(i => i.Title.Contains(searchTerm) || i.Narration.Contains(searchTerm)).OrderByDescending(p => p.PriorityId);
             }
 
-            return View(tickets.ToPagedList(pageNumber, pageSize));  // Returns tickets assigned to user.
+            if (filter != null)
+            {
+                switch (filter)
+                {
+                    case "project":
+                        tickets = tickets.Where(i => i.Project.Id == id).OrderBy(p => p.PriorityId);
+                        break;
+                    case "assignee":
+                        tickets = tickets.Where(i => i.AssignedId == id).OrderBy(p => p.PriorityId);
+                        break;
+                }
+            }
+
+            switch (urole)
+            {
+                case "Administrator":
+                    //return View(tickets.ToPagedList(pageNumber, pageSize));
+                    break;
+                case "Project Manager":
+                    tickets = tickets.Where(u => u.AssignedId == usrs.Id || u.Project.ManagerId == usrs.Id).OrderByDescending(p => p.PriorityId);
+                    //return View(tickets.ToPagedList(pageNumber, pageSize));
+                    break;
+                default:
+                    tickets = tickets.Where(u => u.AssignedId == usrs.Id && u.StatusId != 2).OrderByDescending(p => p.PriorityId);
+                    //return View(tickets.ToPagedList(pageNumber, pageSize));
+                    break;
+            }
+
+            if (SortProperty != null)
+            {
+                switch (SortProperty)
+                {
+                    case "priority":
+                        if (SortDirection)
+                        {
+                            tickets = tickets.OrderByDescending(o => o.Priority.SortOrder);
+                        }
+                        else
+                        {
+                            tickets = tickets.OrderBy(o => o.Priority.SortOrder);
+                        }
+                        break;
+                    case "project":
+                        if (SortDirection)
+                        {
+                            tickets = tickets.OrderByDescending(o => o.Project.Name);
+                        }
+                        else
+                        {
+                            tickets = tickets.OrderBy(o => o.Project.Name);
+                        }
+                        break;
+                    case "title":
+                        if (SortDirection)
+                        {
+                            tickets = tickets.OrderByDescending(o => o.Title);
+                        }
+                        else
+                        {
+                            tickets = tickets.OrderBy(o => o.Title);
+                        }
+                        break;
+                    case "assignee":
+                        if (SortDirection)
+                        {
+                            tickets = tickets.OrderByDescending(o => o.User.Name);
+                        }
+                        else
+                        {
+                            tickets = tickets.OrderBy(o => o.User.Name);
+                        }
+                        break;
+                }
+            }
+            return View(tickets.ToPagedList(pageNumber, pageSize));
+
+            //if (User.IsInRole("Administrator"))  // Returns all tickets
+            //{
+            //    tickets = db.Tickets.OrderByDescending(p => p.PriorityId);
+            //    return View(tickets.ToPagedList(pageNumber, pageSize));
+            //}
+            //if (User.IsInRole("Project Manager")) // Returns Tickets owned user and all tickets where user is the PM.
+            //{
+            //    tickets = db.Tickets.Where(u => u.AssignedId == usrs.Id || u.Project.ManagerId == usrs.Id).OrderByDescending(p => p.PriorityId);
+            //    return View(tickets.ToPagedList(pageNumber, pageSize));
+            //}
+
+            //return View(tickets.ToPagedList(pageNumber, pageSize));  // Returns tickets assigned to user.
         }
 
         // GET: Tickets/Details/5
@@ -389,6 +490,23 @@ namespace BugHound.Controllers
                 
             ViewBag.StatusId = new SelectList(db.Status.OrderBy(so => so.SortOrder), "Id", "Name");
             return View(prichange);
+        } // end of Priortiy Change
+
+        public ActionResult Sort(string property, IEnumerable<Ticket> model)
+        {
+            ticks = model;
+            if (SortProperty == property)
+            {
+                // toggle direction
+                SortDirection = !SortDirection;
+            }
+            else
+            {
+                // initial direction (ascending)
+                SortDirection = false;
+            }
+            SortProperty = property;
+            return RedirectToAction("Index");
         }
 
     }

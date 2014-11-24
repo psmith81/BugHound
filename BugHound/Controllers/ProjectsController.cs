@@ -40,7 +40,7 @@ namespace BugHound.Controllers
         // GET: Projects/Create
         public ActionResult Create()
         {
-            ViewBag.ManagerId = new SelectList(db.Users, "Id", "Name");
+            ViewBag.ManagerId = new SelectList(db.Users.Where(a => a.Active), "Id", "Name");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace BugHound.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ManagerId = new SelectList(db.Users, "Id", "Name", project.ManagerId);
+            ViewBag.ManagerId = new SelectList(db.Users.Where(a => a.Active), "Id", "Name", project.ManagerId);
             return View(project);
         }
 
@@ -74,7 +74,7 @@ namespace BugHound.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ManagerId = new SelectList(db.Users, "Id", "Name", project.ManagerId);
+            ViewBag.ManagerId = new SelectList(db.Users.Where(a => a.Active), "Id", "Name", project.ManagerId);
             return View(project);
         }
 
@@ -91,7 +91,7 @@ namespace BugHound.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.ManagerId = new SelectList(db.Users, "Id", "Name", project.ManagerId);
+            ViewBag.ManagerId = new SelectList(db.Users.Where(a => a.Active), "Id", "Name", project.ManagerId);
             return View(project);
         }
 

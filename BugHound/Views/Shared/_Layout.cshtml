@@ -94,7 +94,10 @@
                                             </li>
                                             <li role="presentation">
                                                 <hr />
-                                                <label class="label label-info"><i class="fa fa-cog"></i> Projects</label>
+                                                <label class="label label-info"><i class="fa fa-cog"></i> Roles</label>
+                                            </li>
+                                            <li role="presentation">
+                                                @Html.ActionLink("List Roles", "ListRoles", "Account", routeValues: null, htmlAttributes: new { @role = "menuitem" })
                                             </li>
                                         </ul>
                                     </li>

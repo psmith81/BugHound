@@ -1,104 +1,116 @@
 ﻿@model PagedList.PagedList<BugHound.Models.Ticket>
 @using PagedList.Mvc;
 
-<h2>Tickets</h2>
+<div class="row">
+    <div class="col-md-3">
+        <h2>Tickets</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <form method="get" class="form form-inline" role="form">
+            <input style="width:100%" class="form-control type="text" name="searchTerm" />
+            <input type="submit" class="btn btn-default" value="Search" />
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12"><br/></div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.ActionLink("Title", "sort", new { property = "title" })
+                    </th>
+                    <th>
+                        @Html.ActionLink("Project", "sort", new { property = "project" })
 
-<table class="table">
-    <tr>
-        <th>
-            Title
-        </th>
-        <th>
-            Created On
-        </th>
-        <th>
-            Last Updated
-        </th>
-        <th>
-            Narration
-        </th>
-        <th>
-            Priority
-        </th>
-        <th>
-            Project
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Type
-        </th>
-        <th>
-            Assigned To
-        </th>
-        <th>
-            Entered By
-        </th>
-        <th>
-            Attachments
-        </th>
-        @if (User.IsInRole("Administrator"))
-        { 
-            <th>
-                Actions
-            </th>
-        }
-    </tr>
+                    </th>
+                    <th>
+                        Narration
+                    </th>
+                    <th>
+                        @Html.ActionLink("Priority", "sort", new { property = "priority" })
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Type
+                    </th>
+                    <th>
+                        @Html.ActionLink("Assignee", "sort", new { property = "assignee" })
+                    </th>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <th>
+                            Actions
+                        </th>
+                    }
+                </tr>
+            </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Title)*@
-            @Html.ActionLink(item.Title, "Details", new { id=item.Id })
-            @*@Html.ActionLink(item.Year.Year1.ToString(), "Uncool", new { id = item.Year.ID, filter = "Year" }, new { @class = "text-muted" })*@
-        </td>
-        <td>
-            <p id="CreatedOn">@item.CreatedOn.ToString("g")</p>
-        </td>
-        <td>
-            <p id="LastUpDated">@item.LastedUpdated.ToString("g")</p>
-        </td>
-        <td>
-           @if( !string.IsNullOrEmpty(item.Narration)){
-                @item.Narration.Substring(0,Math.Min(item.Narration.Length, 50))
-           }
-           
-            @*@Html.DisplayFor(modelItem =>  item.Narration)*@
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Priority.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Project.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.User1.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Attachments)
-        </td>
-        @if (User.IsInRole("Administrator")) 
-        { 
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-        }
-    </tr>
-}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Title)*@
+                        @Html.ActionLink(item.Title, "Details", new { id = item.Id })
+                        @*@Html.ActionLink(item.Year.Year1.ToString(), "Uncool", new { id = item.Year.ID, filter = "Year" }, new { @class = "text-muted" })*@
+                    </td>
+                    <td>
+                        @*@Html.DisplayFor(modelItem => item.Project.Name)*@
+                        @Html.ActionLink(item.Project.Name, "Index", new { id = item.Project.Id, filter = "project" }, new { @class = "text-muted" })
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Narration))
+                        {
+                            @item.Narration.Substring(0, Math.Min(item.Narration.Length, 50))
+                        }
 
-</table>
+                        @*@Html.DisplayFor(modelItem =>  item.Narration)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Priority.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.User.Name, "Index", new { id = item.User.Id, filter = "assignee" }, new { @class = "text-muted" })
+                        @*@Html.DisplayFor(modelItem => item.User.Name)*@
+                    </td>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <td>
+                            <!-- Split button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">Admin</button>
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</li>
+                                    <li>@Html.ActionLink("Details", "Details", new { id = item.Id })</li>
+                                    <li class="divider"></li>
+                                    <li class="btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</li>
+                                </ul>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
